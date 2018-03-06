@@ -2,6 +2,7 @@
 
 namespace csharp_bangazoncli.app.DataAccess.Models
 {
+    // I added this for the CreateCustomerAccount class, not sure if we'll need it
     class CustomerInfo
     {
         public int CustomerId { get; set; }
