@@ -28,7 +28,7 @@ namespace csharp_bangazoncli.app.DataAccess
                     var product = new Product
                     {
                         ProductName = reader["productName"].ToString(),
-                        ProductPrice = int.Parse(reader["productPrice"].ToString())
+                        ProductPrice = double.Parse(reader["productPrice"].ToString())
                     };
 
                     products.Add(product);
