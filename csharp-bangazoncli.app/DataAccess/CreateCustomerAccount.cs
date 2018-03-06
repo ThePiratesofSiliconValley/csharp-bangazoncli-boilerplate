@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace csharp_bangazoncli.app
+namespace csharp_bangazoncli.app.DataAccess
 {
     class CreateCustomerAccount
     {
