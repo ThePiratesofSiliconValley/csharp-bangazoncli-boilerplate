@@ -10,7 +10,8 @@ namespace csharp_bangazoncli.app
     {
         static void Main(string[] args)
         {
-
+            Console.WriteLine("Hello World!");
+            Console.ReadLine();
         }
     }
 }
