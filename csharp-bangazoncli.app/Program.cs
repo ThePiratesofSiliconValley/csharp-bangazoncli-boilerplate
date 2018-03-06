@@ -10,6 +10,7 @@ namespace csharp_bangazoncli.app
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
