@@ -11,6 +11,6 @@ namespace csharp_bangazoncli.app.DataAccess
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
         
-
+        
     }
 }
