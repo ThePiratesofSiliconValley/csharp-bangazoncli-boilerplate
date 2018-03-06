@@ -11,13 +11,14 @@ namespace csharp_bangazoncli.app
     {
         static void Main(string[] args)
         {
+            var counter = 0;
             var customerList = new SelectCustomer();
             var lists = customerList.GetCustomerName();
 
             foreach(var list in lists)
             {
-
-                Console.WriteLine($"{list.LastName}");
+                counter++;
+                Console.WriteLine($"{counter} {list.FirstName} {list.LastName}");
             }
             Console.ReadLine();
         }
