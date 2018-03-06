@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csharp-bangazoncli.app", "csharp-bangazoncli.app\csharp-bangazoncli.app.csproj", "{CA35962B-78E5-4BF5-AA28-D97E476B4C92}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA35962B-78E5-4BF5-AA28-D97E476B4C92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA35962B-78E5-4BF5-AA28-D97E476B4C92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA35962B-78E5-4BF5-AA28-D97E476B4C92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA35962B-78E5-4BF5-AA28-D97E476B4C92}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CD0B13B4-874D-4596-AFB5-8AD53081E494}
+	EndGlobalSection
+EndGlobal
