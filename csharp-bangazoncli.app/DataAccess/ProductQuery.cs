@@ -12,13 +12,31 @@ namespace csharp_bangazoncli.app.DataAccess
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
 
-        //public List<Product> GetAllProducts()
-        //{
-        //    using (var connection = new SqlConnection(_connectionString))
-        //    {
+        public List<Product> GetAllProducts()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var cmd = connection.CreateCommand();
+                cmd.CommandText = @"select productName, productprice from products";
+                connection.Open();
 
-        //    }
-        //}
+                var reader = cmd.ExecuteReader();
+                var products = new List<Product>();
+
+                while (reader.Read())
+                {
+                    var product = new Product
+                    {
+                        ProductName = reader["productName"].ToString(),
+                        ProductPrice = int.Parse(reader["productPrice"].ToString())
+                    };
+
+                    products.Add(product);
+                }
+
+                return products;
+            }
+        }
     }
 
     public class Product
