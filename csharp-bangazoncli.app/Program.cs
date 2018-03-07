@@ -5,15 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using csharp_bangazoncli.app.DataAccess;
 
+
 namespace csharp_bangazoncli.app
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var counter = 0;
+            var customerList = new SelectCustomer();
+            var listOfCustomerNames = customerList.GetCustomerName();
 
-            
+            Console.WriteLine("Which customer will be active?");
+            foreach(var list in listOfCustomerNames)
+            {
+                counter++;
+                Console.WriteLine($"{counter} {list.FirstName} {list.LastName}");
+            }
+
+            var selectedCustomer = Console.ReadKey();
+            var selectedCustomerIndex = int.Parse(selectedCustomer.KeyChar.ToString());
+            var customer = listOfCustomerNames[selectedCustomerIndex - 1];
+            Console.WriteLine($"the selected customer is {customer.FirstName} {customer.LastName}");
 
             Console.WriteLine("You've chosen to create a new customer account. To start, please enter in your customer ID.");
             var customerId = int.Parse(Console.ReadLine().ToString());
@@ -24,9 +37,12 @@ namespace csharp_bangazoncli.app
             Console.WriteLine("Enter your last name");
             var lastName = Console.ReadLine();
 
+            
             Console.WriteLine("Enter your street address");
             var address = Console.ReadLine();
 
+
+           
             Console.WriteLine("Enter your city");
             var city = Console.ReadLine();
 
