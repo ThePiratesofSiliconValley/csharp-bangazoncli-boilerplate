@@ -32,21 +32,25 @@ namespace csharp_bangazoncli.app
 
                 Console.WriteLine("What product would you like to add to the order?");
                 var productToAdd = Console.ReadKey();
-                Console.WriteLine("How many would you like to add?");
-                var numberToAdd = Console.ReadKey();
+                Console.WriteLine("");
                 var selectedProductIndex = int.Parse(productToAdd.KeyChar.ToString());
                 if (selectedProductIndex == counter)
                 {
                     run = false;
                     break;
                 }
+                Console.WriteLine("How many would you like to add?");
+                var numberToAdd = Console.ReadKey();
+                var addedNumber = int.Parse(numberToAdd.KeyChar.ToString());
+                Console.WriteLine("");
+
 
                 var selectedProduct = allProducts[selectedProductIndex - 1];
                 var createOrder = orderModifier.CreateOrder();
-                var addNewProduct = addProduct.AddProductToOrder(selectedProduct.ProductId, int.Parse(numberToAdd.ToString()), createOrder);
+                var addNewProduct = addProduct.AddProductToOrder(selectedProduct.ProductId, addedNumber, createOrder);
                 if (addNewProduct)
                 {
-                    Console.WriteLine($"You added {numberToAdd} {selectedProduct.ProductName} to your order!");
+                    Console.WriteLine($"You added {selectedProduct.ProductName} to your order!");
                 }
             }
         }
