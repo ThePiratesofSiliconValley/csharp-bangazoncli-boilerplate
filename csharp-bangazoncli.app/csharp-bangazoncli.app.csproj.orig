@@ -43,11 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="DataAccess\AddProduct.cs" />
     <Compile Include="DataAccess\OrderModifier.cs" />
+    <Compile Include="DataAccess\ProductQuery.cs" />
+=======
     <Compile Include="DataAccess\CreateCustomerAccount.cs" />
     <Compile Include="DataAccess\Models\CustomerInfo.cs" />
-    <Compile Include="DataAccess\ProductQuery.cs" />
+>>>>>>> master
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

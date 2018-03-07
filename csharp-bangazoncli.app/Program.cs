@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace csharp_bangazoncli.app
 {
     class Program
@@ -16,6 +17,40 @@ namespace csharp_bangazoncli.app
             var addProduct = new AddProduct();
             var orderModifier = new OrderModifier();
 
+            Console.WriteLine("You've chosen to create a new customer account. To start, please enter in your customer ID.");
+            var customerId = int.Parse(Console.ReadLine().ToString());
+
+            Console.WriteLine("Enter your first name");
+            var firstName = Console.ReadLine();
+
+            Console.WriteLine("Enter your last name");
+            var lastName = Console.ReadLine();
+
+            Console.WriteLine("Enter your street address");
+            var address = Console.ReadLine();
+
+            Console.WriteLine("Enter your city");
+            var city = Console.ReadLine();
+
+            Console.WriteLine("Enter your state");
+            var state = Console.ReadLine();
+
+            Console.WriteLine("Enter your postal code");
+            var postalCode = Console.ReadLine();
+
+            Console.WriteLine("Finally, enter your phone number");
+            var phone = Console.ReadLine();
+
+
+            var newCustomerInfo = new CreateCustomerAccount();
+            var newCustomer = newCustomerInfo.AddNewCustomerInfo(customerId, firstName, lastName, address, city, state, postalCode, phone);
+
+            if (newCustomer)
+            {
+                Console.WriteLine("You added a customer!");
+            }
+
+            var order = 0;
             var run = true;
             while (run)
             {
@@ -44,13 +79,16 @@ namespace csharp_bangazoncli.app
                 var addedNumber = int.Parse(numberToAdd.KeyChar.ToString());
                 Console.WriteLine("");
 
-
                 var selectedProduct = allProducts[selectedProductIndex - 1];
-                var createOrder = orderModifier.CreateOrder();
-                var addNewProduct = addProduct.AddProductToOrder(selectedProduct.ProductId, addedNumber, createOrder);
+                if (order == 0)
+                {
+                    order = orderModifier.CreateOrder();
+                }
+                var addNewProduct = addProduct.AddProductToOrder(selectedProduct.ProductId, addedNumber, order);
                 if (addNewProduct)
                 {
                     Console.WriteLine($"You added {selectedProduct.ProductName} to your order!");
+
                 }
             }
         }
