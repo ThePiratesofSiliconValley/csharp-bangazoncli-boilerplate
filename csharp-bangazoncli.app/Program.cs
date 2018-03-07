@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+
 namespace csharp_bangazoncli.app
 {
     class Program
@@ -15,10 +16,23 @@ namespace csharp_bangazoncli.app
             var productQuery = new ProductQuery();
             var allProducts = productQuery.GetAllProducts();
             var addProduct = new AddProduct();
+            var counter = 0;
+            var customerList = new SelectCustomer();
+            var listOfCustomerNames = customerList.GetCustomerName();
             var orderModifier = new OrderModifier();
+            Console.WriteLine("Which customer will be active?");
+            foreach(var list in listOfCustomerNames)
+            {
+                counter++;
+                Console.WriteLine($"{counter} {list.FirstName} {list.LastName}");
+            }
+            
+            var selectedCustomer = Console.ReadKey();
+            var selectedCustomerIndex = int.Parse(selectedCustomer.KeyChar.ToString());
+            var customer = listOfCustomerNames[selectedCustomerIndex - 1];
+            Console.WriteLine($"the selected customer is {customer.FirstName} {customer.LastName}");
 
-            Console.WriteLine("You've chosen to create a new customer account. To start, please enter in your customer ID.");
-            var customerId = int.Parse(Console.ReadLine().ToString());
+            Console.WriteLine("You've chosen to create a new customer account.");
 
             Console.WriteLine("Enter your first name");
             var firstName = Console.ReadLine();
@@ -26,9 +40,12 @@ namespace csharp_bangazoncli.app
             Console.WriteLine("Enter your last name");
             var lastName = Console.ReadLine();
 
+            
             Console.WriteLine("Enter your street address");
             var address = Console.ReadLine();
 
+
+           
             Console.WriteLine("Enter your city");
             var city = Console.ReadLine();
 
@@ -43,7 +60,7 @@ namespace csharp_bangazoncli.app
 
 
             var newCustomerInfo = new CreateCustomerAccount();
-            var newCustomer = newCustomerInfo.AddNewCustomerInfo(customerId, firstName, lastName, address, city, state, postalCode, phone);
+            var newCustomer = newCustomerInfo.AddNewCustomerInfo(firstName, lastName, address, city, state, postalCode, phone);
 
             if (newCustomer)
             {
@@ -56,20 +73,20 @@ namespace csharp_bangazoncli.app
             {
 
                 Console.WriteLine("All Products");
-                var counter = 0;
+                var counter2 = 0;
                 foreach (var product in allProducts)
                 {
-                    counter++;
-                    Console.WriteLine($"{counter}. {product.ProductName}: {product.ProductPrice}");
+                    counter2++;
+                    Console.WriteLine($"{counter2}. {product.ProductName}: {product.ProductPrice}");
                 }
-                counter++;
-                Console.WriteLine($"{counter}. Done adding products.");
+                counter2++;
+                Console.WriteLine($"{counter2}. Done adding products.");
 
                 Console.WriteLine("What product would you like to add to the order?");
                 var productToAdd = Console.ReadKey();
                 Console.WriteLine("");
                 var selectedProductIndex = int.Parse(productToAdd.KeyChar.ToString());
-                if (selectedProductIndex == counter)
+                if (selectedProductIndex == counter2)
                 {
                     run = false;
                     break;

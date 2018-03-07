@@ -44,12 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\AddProduct.cs" />
+    <Compile Include="DataAccess\Models\CustomerList.cs" />
     <Compile Include="DataAccess\OrderModifier.cs" />
     <Compile Include="DataAccess\CreateCustomerAccount.cs" />
     <Compile Include="DataAccess\Models\CustomerInfo.cs" />
     <Compile Include="DataAccess\ProductQuery.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DataAccess\SelectCustomer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
