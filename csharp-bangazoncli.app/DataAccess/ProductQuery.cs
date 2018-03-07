@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -36,6 +37,34 @@ namespace csharp_bangazoncli.app.DataAccess
                 }
 
                 return products;
+            }
+        }
+
+        public Product GetSingleProduct(int productId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var cmd = connection.CreateCommand();
+                cmd.CommandText = @"select * from products where productId = @productId";
+
+                connection.Open();
+                var productIdParam = new SqlParameter("@productId", SqlDbType.Int);
+                productIdParam.Value = productId;
+                cmd.Parameters.Add(productIdParam);
+
+                var reader = cmd.ExecuteReader();
+                var product = new Product();
+                while (reader.Read())
+                {
+                    product.ProductId = int.Parse(reader["productId"].ToString());
+                    product.ProductName = reader["productName"].ToString();
+                    product.ProductDescription = reader["productdescription"].ToString();
+                    product.ProductPrice = double.Parse(reader["productprice"].ToString());
+                    product.Quantity = int.Parse(reader["quantity"].ToString());
+                    product.CustomerId = int.Parse(reader["customerid"].ToString());
+                }
+
+                return product;
             }
         }
     }

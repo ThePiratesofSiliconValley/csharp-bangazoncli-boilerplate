@@ -14,6 +14,7 @@ namespace csharp_bangazoncli.app
             var productQuery = new ProductQuery();
             var allProducts = productQuery.GetAllProducts();
             var addProduct = new AddProduct();
+            var orderModifier = new OrderModifier();
 
             var run = true;
             while (run)
@@ -29,15 +30,24 @@ namespace csharp_bangazoncli.app
                 counter++;
                 Console.WriteLine($"{counter}. Done adding products.");
 
+                Console.WriteLine("What product would you like to add to the order?");
                 var productToAdd = Console.ReadKey();
-
-                if (int.Parse(productToAdd.KeyChar.ToString()) == counter)
+                Console.WriteLine("How many would you like to add?");
+                var numberToAdd = Console.ReadKey();
+                var selectedProductIndex = int.Parse(productToAdd.KeyChar.ToString());
+                if (selectedProductIndex == counter)
                 {
                     run = false;
                     break;
                 }
 
-                
+                var selectedProduct = allProducts[selectedProductIndex - 1];
+                var createOrder = orderModifier.CreateOrder();
+                var addNewProduct = addProduct.AddProductToOrder(selectedProduct.ProductId, int.Parse(numberToAdd.ToString()), createOrder);
+                if (addNewProduct)
+                {
+                    Console.WriteLine($"You added {numberToAdd} {selectedProduct.ProductName} to your order!");
+                }
             }
         }
     }
