@@ -58,7 +58,9 @@ namespace csharp_bangazoncli.app.DataAccess
                 cmd.Parameters.Add(phoneParam);
 
                 
-                cmd.ExecuteNonQuery();
+                var result = cmd.ExecuteNonQuery();
+
+                return result == 1;
             }
         }
     }
