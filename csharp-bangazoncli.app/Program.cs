@@ -15,6 +15,7 @@ namespace csharp_bangazoncli.app
             var customerList = new SelectCustomer();
             var lists = customerList.GetCustomerName();
 
+            Console.WriteLine("Which customer will be active?");
             foreach(var list in lists)
             {
                 counter++;
