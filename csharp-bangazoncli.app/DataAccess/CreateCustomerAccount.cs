@@ -26,13 +26,36 @@ namespace csharp_bangazoncli.app.DataAccess
                                         (@customerId,@firstName,@lastName,@address,@city,@state,@postalCode,@phone)";
 
                 var customerIdParam = new SqlParameter("@custimerId", SqlDbType.Int);
+                customerIdParam.Value = customerId;
+                cmd.Parameters.Add(customerIdParam);
+
                 var firstNameParam = new SqlParameter("@firstName", SqlDbType.NVarChar);
+                firstNameParam.Value = firstName;
+                cmd.Parameters.Add(firstNameParam);
+
                 var lastNameParam = new SqlParameter("@lastName", SqlDbType.NVarChar);
+                lastNameParam.Value = lastName;
+                cmd.Parameters.Add(lastNameParam);
+
                 var addressParam = new SqlParameter("@address", SqlDbType.NVarChar);
+                addressParam.Value = address;
+                cmd.Parameters.Add(addressParam);
+
                 var cityParam = new SqlParameter("@city", SqlDbType.NVarChar);
+                cityParam.Value = city;
+                cmd.Parameters.Add(cityParam);
+
                 var stateParam = new SqlParameter("@state", SqlDbType.NVarChar);
+                stateParam.Value = state;
+                cmd.Parameters.Add(stateParam);
+
                 var postalCodeParam = new SqlParameter("@postalCode", SqlDbType.NVarChar);
+                postalCodeParam.Value = postalCode;
+                cmd.Parameters.Add(postalCodeParam);
+
                 var phoneParam = new SqlParameter("@phone", SqlDbType.NVarChar);
+                phoneParam.Value = phone;
+                cmd.Parameters.Add(phoneParam);
 
                 
                 cmd.ExecuteNonQuery();
