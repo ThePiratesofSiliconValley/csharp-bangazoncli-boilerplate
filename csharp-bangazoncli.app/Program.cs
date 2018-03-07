@@ -13,12 +13,11 @@ namespace csharp_bangazoncli.app
         static void Main(string[] args)
         {
             var counter = 0;
-            var run = true;
             var customerList = new SelectCustomer();
-            var lists = customerList.GetCustomerName();
+            var listOfCustomerNames = customerList.GetCustomerName();
 
             Console.WriteLine("Which customer will be active?");
-            foreach(var list in lists)
+            foreach(var list in listOfCustomerNames)
             {
                 counter++;
                 Console.WriteLine($"{counter} {list.FirstName} {list.LastName}");
@@ -26,7 +25,7 @@ namespace csharp_bangazoncli.app
 
             var selectedCustomer = Console.ReadKey();
             var selectedCustomerIndex = int.Parse(selectedCustomer.KeyChar.ToString());
-            var customer = lists[selectedCustomerIndex - 1];
+            var customer = listOfCustomerNames[selectedCustomerIndex - 1];
             Console.WriteLine($"the selected customer is {customer.FirstName} {customer.LastName}");
 
             Console.WriteLine("You've chosen to create a new customer account. To start, please enter in your customer ID.");
