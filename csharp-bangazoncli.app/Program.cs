@@ -13,15 +13,32 @@ namespace csharp_bangazoncli.app
         {
             var productQuery = new ProductQuery();
             var allProducts = productQuery.GetAllProducts();
+            var addProduct = new AddProduct();
 
-            Console.WriteLine("Here is a list of all products");
-            foreach (var product in allProducts)
+            var run = true;
+            while (run)
             {
+
+                Console.WriteLine("All Products");
                 var counter = 0;
+                foreach (var product in allProducts)
+                {
+                    counter++;
+                    Console.WriteLine($"{counter}. {product.ProductName}: {product.ProductPrice}");
+                }
                 counter++;
-                Console.WriteLine($"{counter}. {product.ProductName}: {product.ProductPrice}");
+                Console.WriteLine($"{counter}. Done adding products.");
+
+                var productToAdd = Console.ReadKey();
+
+                if (int.Parse(productToAdd.KeyChar.ToString()) == counter)
+                {
+                    run = false;
+                    break;
+                }
+
+                
             }
-            Console.ReadLine();
         }
     }
 }
