@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Data;
 using csharp_bangazoncli.app.DataAccess.Models;
 
 namespace csharp_bangazoncli.app.DataAccess
@@ -24,7 +25,17 @@ namespace csharp_bangazoncli.app.DataAccess
                                     VALUES
                                         (@customerId,@firstName,@lastName,@address,@city,@state,@postalCode,@phone)";
 
+                var customerIdParam = new SqlParameter("@custimerId", SqlDbType.Int);
+                var firstNameParam = new SqlParameter("@firstName", SqlDbType.NVarChar);
+                var lastNameParam = new SqlParameter("@lastName", SqlDbType.NVarChar);
+                var addressParam = new SqlParameter("@address", SqlDbType.NVarChar);
+                var cityParam = new SqlParameter("@city", SqlDbType.NVarChar);
+                var stateParam = new SqlParameter("@state", SqlDbType.NVarChar);
+                var postalCodeParam = new SqlParameter("@postalCode", SqlDbType.NVarChar);
+                var phoneParam = new SqlParameter("@phone", SqlDbType.NVarChar);
+
                 
+                cmd.ExecuteNonQuery();
             }
         }
     }
