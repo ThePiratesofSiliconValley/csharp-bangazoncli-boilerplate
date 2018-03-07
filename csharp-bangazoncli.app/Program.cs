@@ -1,4 +1,5 @@
-﻿using System;
+﻿using csharp_bangazoncli.app.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,19 @@ namespace csharp_bangazoncli.app
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Console.ReadLine();
+            Console.WriteLine("Enter the Product Id: ");
+            var productId = Console.ReadLine();
+            Console.WriteLine("Enter the Product Name: ");
+            var productName = Console.ReadLine();
+            Console.WriteLine("Enter the Product Description: ");
+            var productDescription = Console.ReadLine();
+            Console.WriteLine("Enter the Product Price: ");
+            var productPrice = Console.ReadLine();
+            Console.WriteLine("Enter the Product Quantity: ");
+            var quantity = Console.ReadLine();
+
+            var productAdder = new ProductAdder();
+            productAdder.Insert();
         }
     }
 }
