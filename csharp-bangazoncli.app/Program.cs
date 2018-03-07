@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using csharp_bangazoncli.app.DataAccess;
 
 namespace csharp_bangazoncli.app
 {
@@ -11,6 +12,45 @@ namespace csharp_bangazoncli.app
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+
+            
+
+            Console.WriteLine("You've chosen to create a new customer account. To start, please enter in your customer ID.");
+            var customerId = int.Parse(Console.ReadLine().ToString());
+
+            Console.WriteLine("Enter your first name");
+            var firstName = Console.ReadLine();
+
+            Console.WriteLine("Enter your last name");
+            var lastName = Console.ReadLine();
+
+            Console.WriteLine("Enter your street address");
+            var address = Console.ReadLine();
+
+            Console.WriteLine("Enter your city");
+            var city = Console.ReadLine();
+
+            Console.WriteLine("Enter your state");
+            var state = Console.ReadLine();
+
+            Console.WriteLine("Enter your postal code");
+            var postalCode = Console.ReadLine();
+
+            Console.WriteLine("Finally, enter your phone number");
+            var phone = Console.ReadLine();
+
+
+            var newCustomerInfo = new CreateCustomerAccount();
+            var newCustomer = newCustomerInfo.AddNewCustomerInfo(customerId,firstName,lastName,address,city,state,postalCode,phone);
+
+            if (newCustomer)
+            {
+                Console.WriteLine("You added a customer!");
+            }
+
+
+
+
             Console.ReadLine();
         }
     }

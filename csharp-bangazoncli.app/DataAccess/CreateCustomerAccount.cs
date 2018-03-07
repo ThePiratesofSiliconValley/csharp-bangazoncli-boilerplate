@@ -14,7 +14,8 @@ namespace csharp_bangazoncli.app.DataAccess
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
 
-        public bool AddNewCustomerInfo(int customerId, string firstName, string lastName, string address, string city, string state, string postalCode, string phone)
+        public bool AddNewCustomerInfo(int customerId, string firstName, string lastName, string address, 
+                                        string city, string state, string postalCode, string phone)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
