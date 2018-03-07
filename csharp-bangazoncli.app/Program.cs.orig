@@ -12,6 +12,7 @@ namespace csharp_bangazoncli.app
     {
         static void Main(string[] args)
         {
+<<<<<<< HEAD
             var counter = 0;
             var run = true;
             var customerList = new SelectCustomer();
@@ -23,11 +24,18 @@ namespace csharp_bangazoncli.app
                 counter++;
                 Console.WriteLine($"{counter} {list.FirstName} {list.LastName}");
             }
+            
 
             var selectedCustomer = Console.ReadKey();
             var selectedCustomerIndex = int.Parse(selectedCustomer.KeyChar.ToString());
+
+
             var customer = lists[selectedCustomerIndex - 1];
             Console.WriteLine($"the selected customer is {customer.FirstName} {customer.LastName}");
+=======
+            Console.WriteLine("Hello World!");
+
+            
 
             Console.WriteLine("You've chosen to create a new customer account. To start, please enter in your customer ID.");
             var customerId = int.Parse(Console.ReadLine().ToString());
@@ -38,12 +46,9 @@ namespace csharp_bangazoncli.app
             Console.WriteLine("Enter your last name");
             var lastName = Console.ReadLine();
 
-            
             Console.WriteLine("Enter your street address");
             var address = Console.ReadLine();
 
-
-           
             Console.WriteLine("Enter your city");
             var city = Console.ReadLine();
 
@@ -68,6 +73,7 @@ namespace csharp_bangazoncli.app
 
 
 
+>>>>>>> master
             Console.ReadLine();
         }
     }
