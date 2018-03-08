@@ -26,10 +26,6 @@ namespace csharp_bangazoncli.app.DataAccess
                                     VALUES
                                         (@firstName,@lastName,@address,@city,@state,@postalCode,@phone)";
 
-                //var customerIdParam = new SqlParameter("@customerId", SqlDbType.Int);
-                //customerIdParam.Value = customerId;
-                //cmd.Parameters.Add(customerIdParam);
-
                 var firstNameParam = new SqlParameter("@firstName", SqlDbType.NVarChar);
                 firstNameParam.Value = firstName;
                 cmd.Parameters.Add(firstNameParam);

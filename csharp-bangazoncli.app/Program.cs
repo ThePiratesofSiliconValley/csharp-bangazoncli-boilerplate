@@ -99,7 +99,7 @@ namespace csharp_bangazoncli.app
                 var selectedProduct = allProducts[selectedProductIndex - 1];
                 if (order == 0)
                 {
-                    order = orderModifier.CreateOrder();
+                    order = orderModifier.CreateOrder(customer.customerId);
                 }
                 var addNewProduct = addProduct.AddProductToOrder(selectedProduct.ProductId, addedNumber, order);
                 if (addNewProduct)

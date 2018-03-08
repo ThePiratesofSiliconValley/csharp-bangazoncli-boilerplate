@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DataAccess\AddProduct.cs" />
     <Compile Include="DataAccess\Models\CustomerList.cs" />
+    <Compile Include="DataAccess\Models\Product.cs" />
     <Compile Include="DataAccess\OrderModifier.cs" />
     <Compile Include="DataAccess\CreateCustomerAccount.cs" />
     <Compile Include="DataAccess\Models\CustomerInfo.cs" />

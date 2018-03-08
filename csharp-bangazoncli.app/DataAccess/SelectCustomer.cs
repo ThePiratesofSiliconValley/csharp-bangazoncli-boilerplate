@@ -20,7 +20,7 @@ namespace csharp_bangazoncli.app
                 connection.Open();
 
                 var cmd = connection.CreateCommand();
-                cmd.CommandText = @"SELECT Customer.FirstName, Customer.LastName From Customer";
+                cmd.CommandText = @"SELECT Customer.CustomerId, Customer.FirstName, Customer.LastName From Customer";
 
                 var reader = cmd.ExecuteReader();
 
@@ -31,7 +31,8 @@ namespace csharp_bangazoncli.app
                     var allCustomerList = new CustomerNameList
                     {
                         FirstName = reader["FirstName"].ToString(),
-                        LastName = reader["LastName"].ToString()
+                        LastName = reader["LastName"].ToString(),
+                        customerId = int.Parse(reader["customerid"].ToString())
                     };
 
                     allCustomerNames.Add(allCustomerList);

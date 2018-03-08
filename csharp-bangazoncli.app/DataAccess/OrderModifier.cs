@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace csharp_bangazoncli.app.DataAccess
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
 
-        public int CreateOrder()
+        public int CreateOrder(int customerId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -20,10 +21,14 @@ namespace csharp_bangazoncli.app.DataAccess
 
 
                     var cmd = connection.CreateCommand();
-                    cmd.CommandText = @"insert into orders (customerId) values (123)
+                    cmd.CommandText = @"insert into orders (customerId) values (@customerId)
                                     select SCOPE_IDENTITY()";
 
                     connection.Open();
+
+                var selectedCustomer = new SqlParameter("@customerId", SqlDbType.Int);
+                selectedCustomer.Value = customerId;
+                cmd.Parameters.Add(selectedCustomer);
 
                 newOrder = int.Parse(cmd.ExecuteScalar().ToString());
                 return newOrder;
