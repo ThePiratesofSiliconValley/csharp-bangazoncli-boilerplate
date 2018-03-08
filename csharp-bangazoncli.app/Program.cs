@@ -30,7 +30,20 @@ namespace csharp_bangazoncli.app
             var selectedCustomer = Console.ReadKey();
             var selectedCustomerIndex = int.Parse(selectedCustomer.KeyChar.ToString());
             var customer = listOfCustomerNames[selectedCustomerIndex - 1];
+
             Console.WriteLine($"the selected customer is {customer.FirstName} {customer.LastName}");
+
+            Console.WriteLine("What kind of Credit Card are you adding?");
+            var pmtType = Console.ReadLine();
+
+            Console.WriteLine("What is the account number?");
+            var acctNumber = Console.ReadLine();
+
+            var customerId = customer.customerId;
+
+            Console.WriteLine($"You have added {pmtType} {acctNumber} to the {customerId}" );
+
+            
 
             Console.WriteLine("You've chosen to create a new customer account.");
 
@@ -107,6 +120,8 @@ namespace csharp_bangazoncli.app
                     Console.WriteLine($"You added {selectedProduct.ProductName} to your order!");
 
                 }
+
+           
             }
         }
     }

@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\AddPayment.cs" />
     <Compile Include="DataAccess\AddProduct.cs" />
     <Compile Include="DataAccess\Models\CustomerList.cs" />
     <Compile Include="DataAccess\Models\Product.cs" />
