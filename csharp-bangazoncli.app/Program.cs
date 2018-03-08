@@ -13,19 +13,19 @@ namespace csharp_bangazoncli.app
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter the Product Id: ");
-            var productId = Console.ReadLine();
             Console.WriteLine("Enter the Product Name: ");
             var productName = Console.ReadLine();
             Console.WriteLine("Enter the Product Description: ");
             var productDescription = Console.ReadLine();
             Console.WriteLine("Enter the Product Price: ");
-            var productPrice = Console.ReadLine();
+            var productPrice = Convert.ToDouble(Console.ReadLine());
             Console.WriteLine("Enter the Product Quantity: ");
-            var quantity = Console.ReadLine();
+            var quantity = Convert.ToInt32(Console.ReadLine());
 
             var productAdder = new ProductAdder();
-            productAdder.Insert();
+            var newProduct = productAdder.AddNewProduct(productName, productDescription, productPrice, quantity);
+
+
             var productQuery = new ProductQuery();
             var allProducts = productQuery.GetAllProducts();
             var addProduct = new AddProduct();
