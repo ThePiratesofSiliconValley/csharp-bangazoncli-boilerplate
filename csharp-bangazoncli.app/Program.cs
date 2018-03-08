@@ -143,6 +143,22 @@ namespace csharp_bangazoncli.app
                     case 8:
                         Console.Clear();
                         //Update product information
+                        var getAllProducts = new ProductQuery();
+                        var productsToUpdate = getAllProducts.GetAllProducts();
+                        Console.WriteLine("All Products");
+                        var counter3 = 0;
+                        foreach (var product in productsToUpdate)
+                        {
+                            counter3++;
+                            Console.WriteLine($"{counter3}. {product.ProductName}: {product.ProductPrice}");
+                        }
+                        counter3++;
+                        Console.WriteLine($"{counter3}. Done adding products.");
+
+                        Console.WriteLine("What product would you like to update?");
+                        var productToUpdate = Console.ReadLine();
+                        Console.WriteLine("");
+
                         break;
                     case 9:
                         Console.Clear();
