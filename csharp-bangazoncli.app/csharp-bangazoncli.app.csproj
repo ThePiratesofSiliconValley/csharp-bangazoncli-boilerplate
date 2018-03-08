@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DataAccess\CreateCustomerAccount.cs" />
     <Compile Include="DataAccess\Models\CustomerInfo.cs" />
+    <Compile Include="DataAccess\RemoveProduct.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
