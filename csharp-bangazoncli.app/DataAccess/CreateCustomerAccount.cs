@@ -14,7 +14,7 @@ namespace csharp_bangazoncli.app.DataAccess
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
 
-        public bool AddNewCustomerInfo(int customerId, string firstName, string lastName, string address, 
+        public bool AddNewCustomerInfo(string firstName, string lastName, string address, 
                                         string city, string state, string postalCode, string phone)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -22,13 +22,9 @@ namespace csharp_bangazoncli.app.DataAccess
                 connection.Open();
                 var cmd = connection.CreateCommand();
                 cmd.CommandText = @"INSERT INTO Customer
-                                        (CustomerId,FirstName,LastName,Address,City,State,PostalCode,Phone)
+                                        (FirstName,LastName,Address,City,State,PostalCode,Phone)
                                     VALUES
-                                        (@customerId,@firstName,@lastName,@address,@city,@state,@postalCode,@phone)";
-
-                var customerIdParam = new SqlParameter("@customerId", SqlDbType.Int);
-                customerIdParam.Value = customerId;
-                cmd.Parameters.Add(customerIdParam);
+                                        (@firstName,@lastName,@address,@city,@state,@postalCode,@phone)";
 
                 var firstNameParam = new SqlParameter("@firstName", SqlDbType.NVarChar);
                 firstNameParam.Value = firstName;

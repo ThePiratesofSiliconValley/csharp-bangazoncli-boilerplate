@@ -1,9 +1,10 @@
-﻿using System;
+﻿using csharp_bangazoncli.app.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using csharp_bangazoncli.app.DataAccess;
+
 
 
 namespace csharp_bangazoncli.app
@@ -12,24 +13,26 @@ namespace csharp_bangazoncli.app
     {
         static void Main(string[] args)
         {
+            var productQuery = new ProductQuery();
+            var allProducts = productQuery.GetAllProducts();
+            var addProduct = new AddProduct();
             var counter = 0;
             var customerList = new SelectCustomer();
             var listOfCustomerNames = customerList.GetCustomerName();
-
+            var orderModifier = new OrderModifier();
             Console.WriteLine("Which customer will be active?");
             foreach(var list in listOfCustomerNames)
             {
                 counter++;
                 Console.WriteLine($"{counter} {list.FirstName} {list.LastName}");
             }
-
+            
             var selectedCustomer = Console.ReadKey();
             var selectedCustomerIndex = int.Parse(selectedCustomer.KeyChar.ToString());
             var customer = listOfCustomerNames[selectedCustomerIndex - 1];
             Console.WriteLine($"the selected customer is {customer.FirstName} {customer.LastName}");
 
-            Console.WriteLine("You've chosen to create a new customer account. To start, please enter in your customer ID.");
-            var customerId = int.Parse(Console.ReadLine().ToString());
+            Console.WriteLine("You've chosen to create a new customer account.");
 
             Console.WriteLine("Enter your first name");
             var firstName = Console.ReadLine();
@@ -57,17 +60,54 @@ namespace csharp_bangazoncli.app
 
 
             var newCustomerInfo = new CreateCustomerAccount();
-            var newCustomer = newCustomerInfo.AddNewCustomerInfo(customerId,firstName,lastName,address,city,state,postalCode,phone);
+            var newCustomer = newCustomerInfo.AddNewCustomerInfo(firstName, lastName, address, city, state, postalCode, phone);
 
             if (newCustomer)
             {
                 Console.WriteLine("You added a customer!");
             }
 
+            var order = 0;
+            var run = true;
+            while (run)
+            {
 
+                Console.WriteLine("All Products");
+                var counter2 = 0;
+                foreach (var product in allProducts)
+                {
+                    counter2++;
+                    Console.WriteLine($"{counter2}. {product.ProductName}: {product.ProductPrice}");
+                }
+                counter2++;
+                Console.WriteLine($"{counter2}. Done adding products.");
 
+                Console.WriteLine("What product would you like to add to the order?");
+                var productToAdd = Console.ReadKey();
+                Console.WriteLine("");
+                var selectedProductIndex = int.Parse(productToAdd.KeyChar.ToString());
+                if (selectedProductIndex == counter2)
+                {
+                    run = false;
+                    break;
+                }
+                Console.WriteLine("How many would you like to add?");
+                var numberToAdd = Console.ReadKey();
+                var addedNumber = int.Parse(numberToAdd.KeyChar.ToString());
+                Console.WriteLine("");
 
-            Console.ReadLine();
+                var selectedProduct = allProducts[selectedProductIndex - 1];
+                if (order == 0)
+                {
+                    order = orderModifier.CreateOrder(customer.customerId);
+                }
+                var addNewProduct = addProduct.AddProductToOrder(selectedProduct.ProductId, addedNumber, order);
+                if (addNewProduct)
+                {
+                    Console.WriteLine($"You added {selectedProduct.ProductName} to your order!");
+
+                }
+            }
         }
     }
 }
