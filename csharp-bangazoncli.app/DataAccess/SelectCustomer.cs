@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using static csharp_bangazoncli.app.DataAccess.Models.CustomerList;
 using System.Data.SqlClient;
+using csharp_bangazoncli.app.DataAccess.Models;
 
 namespace csharp_bangazoncli.app
 {
@@ -13,7 +14,7 @@ namespace csharp_bangazoncli.app
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
     
-        public List<CustomerNameList> GetCustomerName()
+        public List<CustomerList> GetCustomerName()
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -24,11 +25,11 @@ namespace csharp_bangazoncli.app
 
                 var reader = cmd.ExecuteReader();
 
-                var allCustomerNames = new List<CustomerNameList>();
+                var allCustomerNames = new List<CustomerList>();
 
                 while(reader.Read())
                 {
-                    var allCustomerList = new CustomerNameList
+                    var allCustomerList = new CustomerList
                     {
                         FirstName = reader["FirstName"].ToString(),
                         LastName = reader["LastName"].ToString(),
