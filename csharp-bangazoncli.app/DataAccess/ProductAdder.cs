@@ -31,7 +31,6 @@ namespace csharp_bangazoncli.app.DataAccess
 
                 connection.Open();
 
-               var 
                 var productNameParam = new SqlParameter("@productName", SqlDbType.NVarChar);
                 productNameParam.Value = productName;
                 cmd.Parameters.Add(productNameParam);
