@@ -19,15 +19,19 @@ namespace csharp_bangazoncli.app.DataAccess
                                             (ProductName, 
                                              ProductDescription, 
                                              ProductPrice, 
-                                             Quantity)
+                                             Quantity,
+                                             CustomerId)
                                     VALUES
                                             (@productName,
                                              @productDescription,
                                              @productPrice,
-                                             @quantity)";
+                                             @quantity,
+                                             @customerId)
+                                    select SCOPE_IDENTITY()";
 
                 connection.Open();
 
+               var 
                 var productNameParam = new SqlParameter("@productName", SqlDbType.NVarChar);
                 productNameParam.Value = productName;
                 cmd.Parameters.Add(productNameParam);
@@ -39,6 +43,10 @@ namespace csharp_bangazoncli.app.DataAccess
                 var productPriceParam = new SqlParameter("@productPrice", SqlDbType.Money);
                 productPriceParam.Value = productPrice;
                 cmd.Parameters.Add(productPriceParam);
+
+                var quantityParam = new SqlParameter("@quantity", SqlDbType.Int);
+                quantityParam.Value = quantity;
+                cmd.Parameters.Add(quantityParam);
 
                 var result = cmd.ExecuteNonQuery();
 
