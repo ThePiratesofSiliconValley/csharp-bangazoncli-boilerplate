@@ -86,7 +86,7 @@ namespace csharp_bangazoncli.app.DataAccess
                     case 2:
                         cmd.CommandText = @"update products
                                             set productdescription = @productDescription
-                                            where productproductdescription = @oldDescription";
+                                            where productdescription = @oldDescription";
                         var updateDescription = new SqlParameter("@productDescription", SqlDbType.NVarChar);
                         updateDescription.Value = updateValue.ToString();
                         cmd.Parameters.Add(updateDescription);
@@ -99,35 +99,36 @@ namespace csharp_bangazoncli.app.DataAccess
                         return result == 1;
                     case 3:
                         cmd.CommandText = @"update products
-                                            set productdescription = @productDescription
-                                            where productproductdescription = @oldDescription";
-                        var updateDescription = new SqlParameter("@productDescription", SqlDbType.NVarChar);
-                        updateDescription.Value = updateValue.ToString();
-                        cmd.Parameters.Add(updateDescription);
+                                            set quantity = @newQuantity
+                                            where quantity = @oldQuantity";
+                        var updateQuantity = new SqlParameter("@newQuantity", SqlDbType.Int);
+                        updateQuantity.Value = int.Parse(updateValue.ToString());
+                        cmd.Parameters.Add(updateQuantity);
 
-                        var origDescription = new SqlParameter("@oldName", SqlDbType.NVarChar);
-                        origDescription.Value = updateThisProduct.ProductName;
-                        cmd.Parameters.Add(origDescription);
+                        var origQuantity = new SqlParameter("@oldQuantity", SqlDbType.Int);
+                        origQuantity.Value = updateThisProduct.ProductName;
+                        cmd.Parameters.Add(origQuantity);
 
                         result = cmd.ExecuteNonQuery();
                         return result == 1;
                     case 4:
                         cmd.CommandText = @"update products
-                                            set productdescription = @productDescription
-                                            where productproductdescription = @oldDescription";
-                        var updateDescription = new SqlParameter("@productDescription", SqlDbType.NVarChar);
-                        updateDescription.Value = updateValue.ToString();
-                        cmd.Parameters.Add(updateDescription);
+                                            set productprice = @productPrice
+                                            where productPrice = @oldPrice";
+                        var updatePrice = new SqlParameter("@productDescription", SqlDbType.Money);
+                        updatePrice.Value = double.Parse(updatePrice.ToString());
+                        cmd.Parameters.Add(updatePrice);
 
-                        var origDescription = new SqlParameter("@oldName", SqlDbType.NVarChar);
-                        origDescription.Value = updateThisProduct.ProductName;
-                        cmd.Parameters.Add(origDescription);
+                        var origPrice = new SqlParameter("@oldName", SqlDbType.Money);
+                        origPrice.Value = updateThisProduct.ProductPrice;
+                        cmd.Parameters.Add(origPrice);
 
                         result = cmd.ExecuteNonQuery();
                         return result == 1;
+                    default:
+                        result = 0;
+                        return result == 1;
                 }
-
-
             }
 
 
