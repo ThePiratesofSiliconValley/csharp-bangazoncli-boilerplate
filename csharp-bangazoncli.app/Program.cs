@@ -152,8 +152,6 @@ namespace csharp_bangazoncli.app
                             counter3++;
                             Console.WriteLine($"{counter3}. {product.ProductName}: {product.ProductPrice}");
                         }
-                        counter3++;
-                        Console.WriteLine($"{counter3}. Done adding products.");
 
                         Console.WriteLine("What product would you like to update?");
                         var productToUpdate = Console.ReadLine();
@@ -163,7 +161,11 @@ namespace csharp_bangazoncli.app
                         Console.Clear();
                         var productModifier = new AddProduct();
                         var updateProduct = productModifier.UpdateProduct(updateThisProduct);
-                        
+                        if (updateProduct)
+                        {
+                            Console.WriteLine("Product updated!");
+                        }
+                        System.Threading.Thread.Sleep(1000);
                         break;
                     case 9:
                         Console.Clear();
