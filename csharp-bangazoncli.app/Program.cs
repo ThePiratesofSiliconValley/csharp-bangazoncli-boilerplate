@@ -158,7 +158,15 @@ namespace csharp_bangazoncli.app
                         Console.WriteLine("What product would you like to update?");
                         var productToUpdate = Console.ReadLine();
                         Console.WriteLine("");
-
+                        var updateProductIndex = int.Parse(productToUpdate.ToString());
+                        var updateThisProduct = productsToUpdate[updateProductIndex - 1];
+                        Console.Clear();
+                        Console.WriteLine("What would you like to update?");
+                        Console.WriteLine($"1. Change title \"{updateThisProduct.ProductName}\"");
+                        Console.WriteLine($"2. Change description \"{updateThisProduct.ProductDescription}\"");
+                        Console.WriteLine($"3. Change quantity \"{updateThisProduct.Quantity}\"");
+                        Console.WriteLine($"4. Change price \"{updateThisProduct.ProductPrice}\"");
+                        Console.ReadLine();
                         break;
                     case 9:
                         Console.Clear();
