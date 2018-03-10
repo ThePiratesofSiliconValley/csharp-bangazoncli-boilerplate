@@ -27,6 +27,10 @@ namespace csharp_bangazoncli.app
                 {
                     case 1:
                         Console.Clear();
+
+            
+            
+
                         Console.WriteLine("You've chosen to create a new customer account.");
 
                         Console.WriteLine("Enter your first name");
@@ -79,7 +83,23 @@ namespace csharp_bangazoncli.app
                         break;
                     case 3:
                         Console.Clear();
-                        // Create a payment option"
+
+                        Console.WriteLine("What kind of Credit Card are you adding?");
+                        var pmtType = Console.ReadLine();
+
+                        Console.WriteLine("What is the account number?");
+                        var acctNumber = Console.ReadLine();
+                        var acctNumberInt = long.Parse(acctNumber.ToString());
+
+                        var customerId = customer.CustomerId;
+
+                        var payment = new AddPayment();
+
+                        payment.AddPaymentType(pmtType, customerId, acctNumberInt);
+
+                        Console.WriteLine($"You have added {pmtType} {acctNumber} to {customer.FirstName} {customer.LastName}");
+                        Console.ReadLine();
+
                         break;
                     case 4:
                         Console.Clear();
@@ -197,6 +217,8 @@ namespace csharp_bangazoncli.app
                         {
                             Console.WriteLine("Product updated!");
                         }
+
+           
                         System.Threading.Thread.Sleep(1000);
                         break;
                     case 9:
