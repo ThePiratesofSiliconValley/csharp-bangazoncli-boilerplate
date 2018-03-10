@@ -33,7 +33,7 @@ namespace csharp_bangazoncli.app
                     {
                         FirstName = reader["FirstName"].ToString(),
                         LastName = reader["LastName"].ToString(),
-                        customerId = int.Parse(reader["customerid"].ToString())
+                        CustomerId = int.Parse(reader["customerid"].ToString())
                     };
 
                     allCustomerNames.Add(allCustomerList);

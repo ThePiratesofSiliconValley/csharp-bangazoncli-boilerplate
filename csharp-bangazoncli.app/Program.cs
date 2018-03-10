@@ -14,9 +14,13 @@ namespace csharp_bangazoncli.app
     {
         static void Main(string[] args)
         {
+
             var customer = new CustomerList();
             var run = true;
             while (run)
+            
+
+
             {
                 var userInput = MainMenu();
                 switch (int.Parse(userInput))
@@ -87,7 +91,7 @@ namespace csharp_bangazoncli.app
                         var acctNumber = Console.ReadLine();
                         var acctNumberInt = long.Parse(acctNumber.ToString());
 
-                        var customerId = customer.customerId;
+                        var customerId = customer.CustomerId;
 
                         var payment = new AddPayment();
 
@@ -100,6 +104,34 @@ namespace csharp_bangazoncli.app
                     case 4:
                         Console.Clear();
                         //Add product to sell
+                        var productAdder = new ProductAdder();
+                        Console.WriteLine("Enter the Product Name: ");
+                        var productName = Console.ReadLine();
+                        Console.WriteLine("Enter the Product Description: ");
+                        var productDescription = Console.ReadLine();
+                        Console.WriteLine("Enter the Product Price: ");
+                        var productPrice = Convert.ToDouble(Console.ReadLine());
+                        Console.WriteLine("Enter the Product Quantity: ");
+                        var quantity = Convert.ToInt32(Console.ReadLine());
+                        var customers = productAdder.GetAllCustomers();
+
+                        var counter4 = 0;
+                        Console.WriteLine("Please select the customer whose product you are adding:");
+                        foreach (var person in customers)
+                        {
+                            counter4++;
+                            Console.WriteLine($"{counter4}. {person.FirstName} {person.LastName}");
+                        }
+
+                        var customerToAddProduct = int.Parse(Console.ReadLine());
+
+                        var customerIdToAdd = customers[customerToAddProduct - 1];
+                        var newProduct = productAdder.AddNewProduct(productName, productDescription, productPrice, quantity, customerIdToAdd.CustomerId);
+                        if (newProduct)
+                        {
+                            Console.WriteLine($"You added {productName} to {customerIdToAdd.FirstName} {customerIdToAdd.LastName}!");
+                        }
+                        System.Threading.Thread.Sleep(1000);
                         break;
                     case 5:
                         Console.Clear();
@@ -141,7 +173,7 @@ namespace csharp_bangazoncli.app
                             var selectedProduct = allProducts[selectedProductIndex - 1];
                             if (order == 0)
                             {
-                                order = orderModifier.CreateOrder(customer.customerId);
+                                order = orderModifier.CreateOrder(customer.CustomerId);
                             }
                             var addNewProduct = addProduct.AddProductToOrder(selectedProduct.ProductId, addedNumber, order);
                             if (addNewProduct)
