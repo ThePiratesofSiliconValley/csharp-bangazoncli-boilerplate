@@ -18,9 +18,15 @@ namespace csharp_bangazoncli.app.DataAccess
         {
             var productQuery = new ProductQuery(); // Calling the ProductQuery class, to get the GetAllProducts List
 
-            var getAllProducts = productQuery.GetAllProducts(); // Assigns the GetAllProducts List to the getAllProducts variable
+            var getAllProducts = productQuery.GetCustomerProducts(customer.customerId); // Assigns the GetAllProducts List to the getAllProducts variable
 
-
+            var counter = 0;
+            foreach (var product in getAllProducts)
+            {
+                counter++;
+                Console.WriteLine($"{counter}. {product.ProductName}");
+            }
+            
 
 
             using (var connection = new SqlConnection(_connectionString))
