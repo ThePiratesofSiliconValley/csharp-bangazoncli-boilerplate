@@ -19,7 +19,7 @@ namespace csharp_bangazoncli.app.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 var cmd = connection.CreateCommand();
-                cmd.CommandText = @"select productId, productName, productprice from products";
+                cmd.CommandText = @"select productId, productName, productPrice, quantity from products";
                 connection.Open();
 
                 var reader = cmd.ExecuteReader();
@@ -31,7 +31,8 @@ namespace csharp_bangazoncli.app.DataAccess
                     {
                         ProductId = int.Parse(reader["productId"].ToString()),
                         ProductName = reader["productName"].ToString(),
-                        ProductPrice = double.Parse(reader["productPrice"].ToString())
+                        ProductPrice = double.Parse(reader["productPrice"].ToString()),
+                        Quantity = int.Parse(reader["quantity"].ToString())
                     };
 
                     products.Add(product);

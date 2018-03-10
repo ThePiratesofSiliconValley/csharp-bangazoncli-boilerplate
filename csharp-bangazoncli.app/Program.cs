@@ -14,9 +14,13 @@ namespace csharp_bangazoncli.app
     {
         static void Main(string[] args)
         {
+
             var customer = new CustomerList();
             var run = true;
             while (run)
+            
+
+
             {
                 var userInput = MainMenu();
                 switch (int.Parse(userInput))
@@ -80,6 +84,34 @@ namespace csharp_bangazoncli.app
                     case 4:
                         Console.Clear();
                         //Add product to sell
+                        var productAdder = new ProductAdder();
+                        Console.WriteLine("Enter the Product Name: ");
+                        var productName = Console.ReadLine();
+                        Console.WriteLine("Enter the Product Description: ");
+                        var productDescription = Console.ReadLine();
+                        Console.WriteLine("Enter the Product Price: ");
+                        var productPrice = Convert.ToDouble(Console.ReadLine());
+                        Console.WriteLine("Enter the Product Quantity: ");
+                        var quantity = Convert.ToInt32(Console.ReadLine());
+                        var customers = productAdder.GetAllCustomers();
+
+                        var counter4 = 0;
+                        Console.WriteLine("Please select the customer whose product you are adding:");
+                        foreach (var person in customers)
+                        {
+                            counter4++;
+                            Console.WriteLine($"{counter4}. {person.FirstName} {person.LastName}");
+                        }
+
+                        var customerToAddProduct = int.Parse(Console.ReadLine());
+
+                        var customerIdToAdd = customers[customerToAddProduct - 1];
+                        var newProduct = productAdder.AddNewProduct(productName, productDescription, productPrice, quantity, customerIdToAdd.CustomerId);
+                        if (newProduct)
+                        {
+                            Console.WriteLine($"You added {productName} to {customerIdToAdd.FirstName} {customerIdToAdd.LastName}!");
+                        }
+                        System.Threading.Thread.Sleep(1000);
                         break;
                     case 5:
                         Console.Clear();
@@ -121,7 +153,7 @@ namespace csharp_bangazoncli.app
                             var selectedProduct = allProducts[selectedProductIndex - 1];
                             if (order == 0)
                             {
-                                order = orderModifier.CreateOrder(customer.customerId);
+                                order = orderModifier.CreateOrder(customer.CustomerId);
                             }
                             var addNewProduct = addProduct.AddProductToOrder(selectedProduct.ProductId, addedNumber, order);
                             if (addNewProduct)
@@ -145,6 +177,29 @@ namespace csharp_bangazoncli.app
                     case 8:
                         Console.Clear();
                         //Update product information
+                        var getAllProducts = new ProductQuery();
+                        var productsToUpdate = getAllProducts.GetAllProducts();
+                        Console.WriteLine("All Products");
+                        var counter3 = 0;
+                        foreach (var product in productsToUpdate)
+                        {
+                            counter3++;
+                            Console.WriteLine($"{counter3}. {product.ProductName}: {product.ProductPrice}");
+                        }
+
+                        Console.WriteLine("What product would you like to update?");
+                        var productToUpdate = Console.ReadLine();
+                        Console.WriteLine("");
+                        var updateProductIndex = int.Parse(productToUpdate.ToString());
+                        var updateThisProduct = productsToUpdate[updateProductIndex - 1];
+                        Console.Clear();
+                        var productModifier = new AddProduct();
+                        var updateProduct = productModifier.UpdateProduct(updateThisProduct);
+                        if (updateProduct)
+                        {
+                            Console.WriteLine("Product updated!");
+                        }
+                        System.Threading.Thread.Sleep(1000);
                         break;
                     case 9:
                         Console.Clear();
