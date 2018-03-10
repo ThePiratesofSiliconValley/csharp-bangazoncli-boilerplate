@@ -14,7 +14,7 @@ namespace csharp_bangazoncli.app.DataAccess
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
 
-        public FuckinMethod()
+        public RemoveCustomerProduct()
         {
             var productQuery = new ProductQuery(); // Calling the ProductQuery class, to get the GetAllProducts List
 
