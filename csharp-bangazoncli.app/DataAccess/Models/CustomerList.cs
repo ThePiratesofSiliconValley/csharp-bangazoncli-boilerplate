@@ -10,7 +10,7 @@ namespace csharp_bangazoncli.app.DataAccess.Models
     {
             public string FirstName { get; set; }
             public string LastName { get; set; }
-            public int customerId { get; set; }
+            public int CustomerId { get; set; }
         
     }
 }
