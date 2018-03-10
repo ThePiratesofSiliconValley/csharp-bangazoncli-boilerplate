@@ -13,7 +13,7 @@ namespace csharp_bangazoncli.app.DataAccess
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
 
-        public bool AddPaymentType(string pmtType, int customerId, int acctNumber)
+        public bool AddPaymentType(string pmtType, int customerId, long acctNumber)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -24,7 +24,7 @@ namespace csharp_bangazoncli.app.DataAccess
                            ,[CustomerId]
                            ,[AcctNumber])
                      VALUES
-                           (@pmtType), @customerId, @acctNumber)";
+                           (@pmtType, @customerId, @acctNumber)";
                            
  
                 var pmtTypeParam = new SqlParameter("@pmtType", SqlDbType.NVarChar);
@@ -35,7 +35,7 @@ namespace csharp_bangazoncli.app.DataAccess
                 customerIdParam.Value = customerId;
                 cmd.Parameters.Add(customerIdParam);
 
-                var acctNumberParam = new SqlParameter("@acctNumber", SqlDbType.Int);
+                var acctNumberParam = new SqlParameter("@acctNumber", SqlDbType.BigInt);
                 acctNumberParam.Value = acctNumber;
                 cmd.Parameters.Add(acctNumberParam);
 
