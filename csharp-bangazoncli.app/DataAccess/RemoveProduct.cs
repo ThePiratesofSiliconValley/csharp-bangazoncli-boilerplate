@@ -26,13 +26,23 @@ namespace csharp_bangazoncli.app.DataAccess
                 counter++;
                 Console.WriteLine($"{counter}. {product.ProductName}");
             }
-            
 
+            var selectedProduct = int.Parse(Console.ReadLine());
 
+            var productToDelete = getAllProducts[selectedProduct - 1];
+
+            var deleteProduct = DeleteProduct(productToDelete.ProductId);
+        }
+
+        public DeleteProduct(int productId)
+        {
             using (var connection = new SqlConnection(_connectionString))
             {
                 var cmd = connection.CreateCommand();
-                cmd.CommandText = @"";
+                cmd.CommandText = @"select ProductId from Products";
+                connection.Open();
+
+                var reader = cmd.ExecuteReader();
             }
         }
     }
