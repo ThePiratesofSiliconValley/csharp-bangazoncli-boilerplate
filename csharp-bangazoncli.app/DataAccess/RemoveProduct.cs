@@ -14,13 +14,20 @@ namespace csharp_bangazoncli.app.DataAccess
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
 
-        public RemoveCustomerProduct()
+        public RemoveCustomerProduct(CustomerList customer)
         {
             var productQuery = new ProductQuery(); // Calling the ProductQuery class, to get the GetAllProducts List
 
             var getAllProducts = productQuery.GetAllProducts(); // Assigns the GetAllProducts List to the getAllProducts variable
 
 
+
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var cmd = connection.CreateCommand();
+                cmd.CommandText = @"";
+            }
         }
     }
 }
