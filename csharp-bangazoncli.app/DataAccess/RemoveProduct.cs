@@ -14,7 +14,7 @@ namespace csharp_bangazoncli.app.DataAccess
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
 
-        public RemoveCustomerProduct(CustomerList customer)
+        public bool RemoveCustomerProduct(CustomerList customer)
         {
             var productQuery = new ProductQuery(); // Calling the ProductQuery class, to get the GetAllProducts List
 
@@ -36,7 +36,10 @@ namespace csharp_bangazoncli.app.DataAccess
             if (!canIDeleteThis)
             {
                 var deleteProduct = DeleteProduct(productToDelete.ProductId);
+                return deleteProduct;
             }
+
+            return false;
         }
 
         public bool CheckOrderLine(int productId)
