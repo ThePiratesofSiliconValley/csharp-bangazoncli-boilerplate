@@ -47,7 +47,7 @@ namespace csharp_bangazoncli.app.DataAccess
             using (var connection = new SqlConnection(_connectionString))
             {
                 var cmd = connection.CreateCommand();
-                cmd.CommandText = @"select count(*) from oderline
+                cmd.CommandText = @"select count(*) from orderline
                                     where ProductId = @productId";
                 connection.Open();
 

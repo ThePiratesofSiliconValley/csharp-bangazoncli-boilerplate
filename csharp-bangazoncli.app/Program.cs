@@ -195,7 +195,6 @@ namespace csharp_bangazoncli.app
 
                         var removeCustomerProduct = new RemoveProduct();
                         removeCustomerProduct.RemoveCustomerProduct(customer);
-
                         
                         break;
                     case 8:
