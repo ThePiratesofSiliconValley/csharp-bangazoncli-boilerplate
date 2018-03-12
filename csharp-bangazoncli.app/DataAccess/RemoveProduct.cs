@@ -32,12 +32,11 @@ namespace csharp_bangazoncli.app.DataAccess
             var productToDelete = getAllProducts[selectedProduct - 1];
 
             var canIDeleteThis = CheckOrderLine(productToDelete.ProductId);
+
             if (!canIDeleteThis)
             {
                 var deleteProduct = DeleteProduct(productToDelete.ProductId);
             }
-
-            
         }
 
         public bool CheckOrderLine(int productId)
@@ -59,7 +58,7 @@ namespace csharp_bangazoncli.app.DataAccess
             }
         }
 
-        public DeleteProduct(int productId)
+        public bool DeleteProduct(int productId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -72,6 +71,10 @@ namespace csharp_bangazoncli.app.DataAccess
                 var deletedProductIdParam = new SqlParameter("@productId", SqlDbType.Int);
                 deletedProductIdParam.Value = productId;
                 cmd.Parameters.Add(deletedProductIdParam);
+
+                var result = int.Parse(cmd.ExecuteNonQuery().ToString());
+
+                return result == 1;
             }
         }
     }
