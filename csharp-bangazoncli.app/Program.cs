@@ -191,8 +191,8 @@ namespace csharp_bangazoncli.app
                     case 7:
                         Console.Clear();
                         //Remove customer product
-                        var removeCustomerProduct = new RemoveProduct();
-                        removeCustomerProduct.RemoveCustomerProduct(customer);
+                        //var removeCustomerProduct = new RemoveProduct();
+                        //removeCustomerProduct.RemoveCustomerProduct(customer);
                         break;
                     case 8:
                         Console.Clear();
