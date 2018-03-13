@@ -42,6 +42,37 @@ namespace csharp_bangazoncli.app.DataAccess
             }
         }
 
+        public List<Product> GetCustomerProducts(int customerId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var cmd = connection.CreateCommand();
+                cmd.CommandText = @"select * from products where CustomerId = @customerId";
+                connection.Open();
+
+                var customerIdParam = new SqlParameter("@customerId", SqlDbType.Int);
+                customerIdParam.Value = customerId;
+                cmd.Parameters.Add(customerIdParam);
+
+                var reader = cmd.ExecuteReader();
+                var products = new List<Product>();
+
+                while (reader.Read())
+                {
+                    var product = new Product
+                    {
+                        ProductId = int.Parse(reader["productId"].ToString()),
+                        ProductName = reader["productName"].ToString(),
+                        ProductPrice = double.Parse(reader["productPrice"].ToString())
+                    };
+
+                    products.Add(product);
+                }
+
+                return products;
+            }
+        }
+
         public Product GetSingleProduct(int productId)
         {
             using (var connection = new SqlConnection(_connectionString))
