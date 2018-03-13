@@ -187,6 +187,10 @@ namespace csharp_bangazoncli.app
                     case 6:
                         Console.Clear();
                         //Complete an order
+                        var finalOrder = new CompleteOrder();
+                        Console.Read();
+
+
                         break;
                     case 7:
                         Console.Clear();
