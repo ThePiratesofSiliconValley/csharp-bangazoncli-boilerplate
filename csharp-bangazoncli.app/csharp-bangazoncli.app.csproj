@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DataAccess\AddPayment.cs" />
     <Compile Include="DataAccess\Models\ProductsModel.cs" />
+    <Compile Include="DataAccess\Models\RevenueResult.cs" />
     <Compile Include="DataAccess\ProductAdder.cs" />
     <Compile Include="DataAccess\AddProduct.cs" />
     <Compile Include="DataAccess\Models\CustomerList.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="DataAccess\CreateCustomerAccount.cs" />
     <Compile Include="DataAccess\Models\CustomerInfo.cs" />
     <Compile Include="DataAccess\ProductQuery.cs" />
+    <Compile Include="DataAccess\RevenueQuery.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataAccess\SelectCustomer.cs" />

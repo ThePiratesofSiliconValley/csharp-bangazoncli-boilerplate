@@ -227,7 +227,19 @@ namespace csharp_bangazoncli.app
                         break;
                     case 10:
                         Console.Clear();
-                        //Show customer revenue report
+                        var revenueQuery = new RevenueQuery();
+                        var listOfRevenues = revenueQuery.GetCustomerRevenue(customer.FirstName, customer.LastName);
+                        foreach (var revenueResult in listOfRevenues)
+                        {
+                           
+                            Console.WriteLine($"{revenueResult.SellerFirstName} {revenueResult.SellerLastName}");
+                        }
+
+
+                        
+                        
+                       
+
                         break;
                     case 11:
                         Console.Clear();
