@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleTables;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -66,12 +67,22 @@ namespace csharp_bangazoncli.app.DataAccess
                     Top3Grossers.Add(topGrosser);
                 }
 
-                foreach (var grosser in Top3Grossers)
-                {
-                    Console.WriteLine($"{grosser.ProductName}: {grosser.TotalOrders}: {grosser.TotalPurchasers}: {grosser.TotalGross}");
-                }
-                Console.ReadKey();
+                BuildMyTable(Top3Grossers);
             }
+        }
+
+        private void BuildMyTable(List<TopGrosser> top3Grossers)
+        {
+            Console.WriteLine("Here are the top 3 grossing products.");
+            var table = new ConsoleTable("Product", "Orders", "Purchasers", "Revenue");
+
+            foreach (var product in top3Grossers)
+            {
+                table.AddRow(product.ProductName, product.TotalOrders, product.TotalPurchasers, $"${product.TotalGross}");
+            }
+
+            table.Write();
+            Console.ReadKey();
         }
     }
 
