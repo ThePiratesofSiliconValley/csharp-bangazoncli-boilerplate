@@ -54,6 +54,7 @@
     <Compile Include="DataAccess\Models\CustomerInfo.cs" />
     <Compile Include="DataAccess\ProductQuery.cs" />
     <Compile Include="DataAccess\RemoveProduct.cs" />
+    <Compile Include="DataAccess\RevenueReport.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataAccess\SelectCustomer.cs" />

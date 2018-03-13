@@ -58,12 +58,11 @@ namespace csharp_bangazoncli.app.DataAccess
                 {
                     var topGrosser = new TopGrosser
                     {
-                        TotalGross = double.Parse(reader["totalGross"].ToString()),
+                        TotalGross = decimal.Parse(reader["totalGross"].ToString()),
                         ProductName = reader["productName"].ToString(),
-                        TotalPurchasers = int.Parse(reader["productName"].ToString()),
+                        TotalPurchasers = int.Parse(reader["totalpurchasers"].ToString()),
                         TotalOrders = int.Parse(reader["orders"].ToString())
                     };
-
                     Top3Grossers.Add(topGrosser);
                 }
 
@@ -78,7 +77,7 @@ namespace csharp_bangazoncli.app.DataAccess
 
     internal class TopGrosser
     {
-        public double TotalGross { get; set; }
+        public decimal TotalGross { get; set; }
         public string ProductName { get; set; }
         public int TotalPurchasers { get; set; }
         public int TotalOrders { get; set; }
