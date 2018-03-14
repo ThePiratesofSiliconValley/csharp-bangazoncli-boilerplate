@@ -237,6 +237,8 @@ namespace csharp_bangazoncli.app
                     case 11:
                         Console.Clear();
                         //Show overall product popularity
+                        var revenueReport = new RevenueReport();
+                        revenueReport.GetTop3Revenue();
                         break;
                     case 12:
                         //Leave Bangazon!
