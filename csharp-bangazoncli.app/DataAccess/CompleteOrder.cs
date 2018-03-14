@@ -11,6 +11,25 @@ namespace csharp_bangazoncli.app.DataAccess
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
 
+        public List<OrderDetailsModel> DisplayOrderDetails()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var cmd = connection.CreateCommand();
+                cmd.CommandText = @"select ol.orderid,
+		                                p.productname,
+		                                ol.quantity,
+		                                p.productprice,
+		                                ol.quantity * p.productprice as totalProductPrice
+                                    from orderline ol
+		                                join products p
+		                                on ol.productid = ol.productid
+                                        where ol.OrderId = 1
+                                        order by ol.orderid";
+            }
+        }
+
         public List<CompleteOrderModel> TotalPriceOfOrder()
         {
             using (var connection = new SqlConnection(_connectionString))

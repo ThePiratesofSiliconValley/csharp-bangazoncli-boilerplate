@@ -46,6 +46,7 @@
     <Compile Include="DataAccess\AddPayment.cs" />
     <Compile Include="DataAccess\CompleteOrder.cs" />
     <Compile Include="DataAccess\Models\CompleteOrderModel.cs" />
+    <Compile Include="DataAccess\Models\OrderDetailsModel.cs" />
     <Compile Include="DataAccess\Models\ProductsModel.cs" />
     <Compile Include="DataAccess\ProductAdder.cs" />
     <Compile Include="DataAccess\AddProduct.cs" />
