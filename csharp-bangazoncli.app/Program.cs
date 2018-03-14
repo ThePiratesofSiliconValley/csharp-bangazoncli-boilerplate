@@ -79,7 +79,7 @@ namespace csharp_bangazoncli.app
                         var selectedCustomerIndex = int.Parse(selectedCustomer.ToString());
                         customer = listOfCustomerNames[selectedCustomerIndex - 1];
                         Console.WriteLine($"the selected customer is {customer.FirstName} {customer.LastName}");
-
+                        Console.ReadLine();
                         break;
                     case 3:
                         Console.Clear();
@@ -229,13 +229,14 @@ namespace csharp_bangazoncli.app
                         Console.Clear();
                         var revenueQuery = new RevenueQuery();
                         var listOfRevenues = revenueQuery.GetCustomerRevenue(customer.FirstName, customer.LastName);
+
+                        Console.WriteLine($"{customer.FirstName} {customer.LastName}");
                         foreach (var revenueResult in listOfRevenues)
                         {
-                           
-                            Console.WriteLine($"{revenueResult.SellerFirstName} {revenueResult.SellerLastName}");
+
+                            Console.WriteLine($"Order number {revenueResult.OrderId} {Environment.NewLine}{revenueResult.ProductName}    {revenueResult.OrderItemQuantity}  {revenueResult.indivItemTotal}");
                         }
-
-
+                        Console.ReadLine();
                         
                         
                        

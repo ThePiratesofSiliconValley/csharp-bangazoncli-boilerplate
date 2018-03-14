@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -27,12 +28,22 @@ namespace csharp_bangazoncli.app.DataAccess
 		                                 OrderLine.OrderId, 
 		                                 OrderLine.OrderLineId, 
 		                                 OrderLine.ProductId, 
-		                                 OrderLine.Quantity as OrderLineQuantity
-
+		                                 OrderLine.Quantity as OrderLineQuantity,
+                                         OrderLine.Quantity * Products.ProductPrice as indivItemTotal
                                 FROM Products
 	                                join Customer on Products.CustomerId = Customer.CustomerId
-	                                join OrderLine on Products.ProductId = OrderLine.ProductId
-                Where Customer.FirstName = customerFirstName AND Customer.LastName = customerLastName";
+	                                join OrderLine on OrderLine.ProductId = Products.ProductId
+                Where Customer.FirstName = @customerFirstName AND Customer.LastName = @customerLastName
+                Order by OrderId";
+
+                var customerFirstNameParam = new SqlParameter("@customerFirstName", SqlDbType.NVarChar);
+                customerFirstNameParam.Value = customerFirstName;
+                command.Parameters.Add(customerFirstNameParam);
+
+                var customerLastNameParam = new SqlParameter("@customerLastName", SqlDbType.NVarChar);
+                customerLastNameParam.Value = customerLastName;
+                command.Parameters.Add(customerLastNameParam);
+
 
                 var reader = command.ExecuteReader();
 
@@ -50,7 +61,8 @@ namespace csharp_bangazoncli.app.DataAccess
                         OrderId = int.Parse(reader["OrderId"].ToString()),
                         OrderLineId = int.Parse(reader["OrderLineId"].ToString()),
                         ProductId = int.Parse(reader["ProductId"].ToString()),
-                        OrderItemQuantity = int.Parse(reader["OrderLineQuantity"].ToString())
+                        OrderItemQuantity = int.Parse(reader["OrderLineQuantity"].ToString()),
+                        indivItemTotal = double.Parse(reader["indivItemTotal"].ToString())
                     };
 
                     sellerRevenue.Add(allSellersRevenue);

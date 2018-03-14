@@ -17,5 +17,6 @@ namespace csharp_bangazoncli.app.DataAccess.Models
 		public int OrderLineId { get; set; }
 		public int ProductId { get; set; }
 		public int OrderItemQuantity { get; set; }
+        public double indivItemTotal { get; set; }
     }
 }
