@@ -19,37 +19,10 @@ namespace csharp_bangazoncli.app.DataAccess
             {
                 var cmd = connection.CreateCommand();
 
-                cmd.CommandText = @"with OrderItemsCte (productID, quantity) as 
-                                    (
-	                                    select productId, SUM(quantity) as TotalQuantity from OrderLine
-	                                    group by ProductId
-                                    ),
-                                    TotalOrdersCte (productId, orders) as
-                                    (
-	                                    select productId, count(orderId) as TotalOrders from OrderLine
-	                                    group by ProductId
-                                    ),
-                                    TotalCustomersCte (productId, totalCustomers) as
-                                    (
-	                                    select p.productId, count(p.customerId) as customerCount from Products p
-	                                    join orders o on o.CustomerId = p.CustomerId
-	                                    join TotalOrdersCte toc on toc.productId = p.ProductId
-	                                    group by p.ProductId
-                                    ),
-                                    OrderTotalsCte (ProductId, totalGross, productprice, productname, purchasers) as
-                                    (
-	                                    select p.productId, oi.Quantity * p.ProductPrice, p.ProductPrice as totalGross, p.ProductName, tc.totalCustomers from OrderItemsCTE oi
-	                                    join products p on p.ProductId = oi.productID
-	                                    join TotalCustomersCte tc on tc.productId = oi.productID
-                                    ),
-                                    TotalGrossCte (quantity, productId, totalGross, productprice, productname, totalpurchasers) as
-                                    (
-	                                    select oi.quantity, oi.productId, ot.totalGross, ot.productprice, ot.productname, ot.purchasers from OrderItemsCte oi
-	                                    join OrderTotalsCTE ot on ot.productID = oi.productid
-                                    )
-	                                    select top(3) tg.totalGross, tg.productName, tg.totalpurchasers, toc.orders from TotalGrossCte tg
-	                                    join TotalOrdersCte toc on toc.productId = tg.productId
-	                                    order by totalGross desc";
+                cmd.CommandText = @"select top 3 sum(p.ProductPrice*ol.Quantity) as totalGross,p.productName,p.ProductId, count(*) as                             TotalOrders, count(distinct(o.CustomerId)) as totalCustomers
+                                    from Orders o join OrderLine ol on ol.OrderId = o.OrderId join Products p on p.ProductId = ol.ProductId
+                                    group by p.ProductName,p.ProductId
+                                    order by 1 desc";
                 connection.Open();
 
                 var reader = cmd.ExecuteReader();
@@ -59,10 +32,10 @@ namespace csharp_bangazoncli.app.DataAccess
                 {
                     var topGrosser = new TopGrosser
                     {
-                        TotalGross = decimal.Parse(reader["totalGross"].ToString()),
+                        TotalGross = Math.Round(Convert.ToDecimal(reader["totalGross"].ToString()), 2),
                         ProductName = reader["productName"].ToString(),
-                        TotalPurchasers = int.Parse(reader["totalpurchasers"].ToString()),
-                        TotalOrders = int.Parse(reader["orders"].ToString())
+                        TotalPurchasers = int.Parse(reader["totalcustomers"].ToString()),
+                        TotalOrders = int.Parse(reader["totalorders"].ToString())
                     };
                     Top3Grossers.Add(topGrosser);
                 }
@@ -78,11 +51,25 @@ namespace csharp_bangazoncli.app.DataAccess
 
             foreach (var product in top3Grossers)
             {
-                table.AddRow(product.ProductName, product.TotalOrders, product.TotalPurchasers, $"${product.TotalGross}");
+                var truncatedProduct = Truncate(product.ProductName, 18);
+
+                table.AddRow(truncatedProduct, product.TotalOrders, product.TotalPurchasers, $"${product.TotalGross}");
             }
 
-            table.Write();
+            table.Write(Format.Alternative);
+            Console.WriteLine("Press any key to navigate back to the main menu.");
             Console.ReadKey();
+        }
+
+
+        string Truncate(string value, int maxLength)
+        {
+            if (!string.IsNullOrEmpty(value) && value.Length > maxLength)
+            {
+                return value.Substring(0, maxLength);
+            }
+
+            return value;
         }
     }
 
