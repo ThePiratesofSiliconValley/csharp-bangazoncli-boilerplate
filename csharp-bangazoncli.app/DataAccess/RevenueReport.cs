@@ -51,7 +51,7 @@ namespace csharp_bangazoncli.app.DataAccess
 
             foreach (var product in top3Grossers)
             {
-                var truncatedProduct = Truncate(product.ProductName, 18);
+                var truncatedProduct = Truncate(product.ProductName, 15);
 
                 table.AddRow(truncatedProduct, product.TotalOrders, product.TotalPurchasers, $"${product.TotalGross}");
             }
@@ -66,7 +66,7 @@ namespace csharp_bangazoncli.app.DataAccess
         {
             if (!string.IsNullOrEmpty(value) && value.Length > maxLength)
             {
-                return value.Substring(0, maxLength);
+                return value.Substring(0, maxLength) + "...";
             }
 
             return value;
