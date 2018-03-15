@@ -11,7 +11,7 @@ namespace csharp_bangazoncli.app.DataAccess
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
 
-        public List<OrderDetailsModel> DisplayOrderDetails()
+        public List<OrderDetailsModel> DisplayOrderDetails(int orderId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -25,8 +25,26 @@ namespace csharp_bangazoncli.app.DataAccess
                                     from orderline ol
 		                                join products p
 		                                on ol.productid = ol.productid
-                                        where ol.OrderId = 1
+                                        where ol.OrderId = @orderId
                                         order by ol.orderid";
+
+                var reader = cmd.ExecuteReader();
+                var totalOrder = new List<OrderDetailsModel>();
+
+                while (reader.Read())
+                {
+                    var orderDetails = new OrderDetailsModel
+                    {
+                        ProductName = reader["ProductName"].ToString(),
+                        Quantity = int.Parse(reader["Quantity"].ToString()),
+                        ProductPrice = decimal.Parse(reader["ProductPrice"].ToString()),
+                        TotalProductPrice = decimal.Parse(reader["TotalProductPrice"].ToString())
+                    };
+
+                    totalOrder.Add(orderDetails);
+                }
+
+                return totalOrder;
             }
         }
 
