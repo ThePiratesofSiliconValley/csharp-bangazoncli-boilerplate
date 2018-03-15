@@ -230,17 +230,30 @@ namespace csharp_bangazoncli.app
                         var revenueQuery = new RevenueQuery();
                         var listOfRevenues = revenueQuery.GetCustomerRevenue(customer.FirstName, customer.LastName);
 
-                        Console.WriteLine($"{customer.FirstName} {customer.LastName}");
-                        foreach (var revenueResult in listOfRevenues)
-                        {
+                        var personRevenue = from personOrder in listOfRevenues
+                                            group personOrder by personOrder.OrderId into g
+                                            orderby g.Key
+                                            select g;
 
-                            Console.WriteLine($"Order number {revenueResult.OrderId} {Environment.NewLine}{revenueResult.ProductName}    {revenueResult.OrderItemQuantity}  {revenueResult.indivItemTotal}");
-                        }
+                        //var item = from itemList in personRevenue
+                        //           group itemList by itemList.order into i
+                        //           select new { indiv = i.Key };
+
+                        Console.WriteLine($"This is the revenue report for {customer.FirstName} {customer.LastName}");
+                        foreach (var revenueResult in personRevenue)
+                        {
+                           
+                            Console.WriteLine($"\n Order number {revenueResult.Key}");
+                            
+                            foreach (var item in revenueResult)
+                            {
+                                Console.WriteLine($"{item.ProductName} {item.OrderItemQuantity}   {item.indivItemTotal} ");
+                            }
+                        
+                        }   
+                        
                         Console.ReadLine();
                         
-                        
-                       
-
                         break;
                     case 11:
                         Console.Clear();
