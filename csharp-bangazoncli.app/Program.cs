@@ -79,7 +79,7 @@ namespace csharp_bangazoncli.app
                         var selectedCustomerIndex = int.Parse(selectedCustomer.ToString());
                         customer = listOfCustomerNames[selectedCustomerIndex - 1];
                         Console.WriteLine($"the selected customer is {customer.FirstName} {customer.LastName}");
-
+                        Console.ReadLine();
                         break;
                     case 3:
                         Console.Clear();
@@ -232,7 +232,36 @@ namespace csharp_bangazoncli.app
                         break;
                     case 10:
                         Console.Clear();
-                        //Show customer revenue report
+                        var revenueQuery = new RevenueQuery();
+                        var listOfRevenues = revenueQuery.GetCustomerRevenue(customer.FirstName, customer.LastName);
+
+                        var personRevenue = from personOrder in listOfRevenues
+                                            group personOrder by personOrder.OrderId into g
+                                            orderby g.Key
+                                            select g;
+
+                        var revenueCounter = 0.00;                      
+
+                        Console.WriteLine($"This is the revenue report for {customer.FirstName} {customer.LastName}");
+                        foreach (var revenueResult in personRevenue)
+                        {
+                           
+                            Console.WriteLine($"\nOrder #{revenueResult.Key}\n--------------------------------------");
+                           
+                            
+                            foreach (var item in revenueResult)
+                            {
+                                revenueCounter += item.indivItemTotal;
+                                Console.WriteLine($"{item.ProductName}     {item.OrderItemQuantity}   ${item.indivItemTotal} ");
+
+                            }
+                            //Console.WriteLine()
+                           
+
+                        }
+                        Console.WriteLine($"\nTotal Revenue is ${revenueCounter}");
+                        Console.ReadLine();
+                        
                         break;
                     case 11:
                         Console.Clear();
