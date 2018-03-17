@@ -235,23 +235,26 @@ namespace csharp_bangazoncli.app
                                             orderby g.Key
                                             select g;
 
-                        //var item = from itemList in personRevenue
-                        //           group itemList by itemList.order into i
-                        //           select new { indiv = i.Key };
+                        var revenueCounter = 0.00;                      
 
                         Console.WriteLine($"This is the revenue report for {customer.FirstName} {customer.LastName}");
                         foreach (var revenueResult in personRevenue)
                         {
                            
-                            Console.WriteLine($"\n Order number {revenueResult.Key}");
+                            Console.WriteLine($"\nOrder #{revenueResult.Key}\n--------------------------------------");
+                           
                             
                             foreach (var item in revenueResult)
                             {
-                                Console.WriteLine($"{item.ProductName} {item.OrderItemQuantity}   {item.indivItemTotal} ");
+                                revenueCounter += item.indivItemTotal;
+                                Console.WriteLine($"{item.ProductName}     {item.OrderItemQuantity}   ${item.indivItemTotal} ");
+
                             }
-                        
-                        }   
-                        
+                            //Console.WriteLine()
+                           
+
+                        }
+                        Console.WriteLine($"\nTotal Revenue is ${revenueCounter}");
                         Console.ReadLine();
                         
                         break;
