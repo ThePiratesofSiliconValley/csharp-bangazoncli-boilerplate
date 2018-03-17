@@ -191,6 +191,11 @@ namespace csharp_bangazoncli.app
                     case 7:
                         Console.Clear();
                         //Remove customer product
+                        Console.WriteLine("Please choose product to delete:");
+
+                        var removeCustomerProduct = new RemoveProduct();
+                        removeCustomerProduct.RemoveCustomerProduct(customer);
+                        
                         break;
                     case 8:
                         Console.Clear();
@@ -261,6 +266,8 @@ namespace csharp_bangazoncli.app
                     case 11:
                         Console.Clear();
                         //Show overall product popularity
+                        var revenueReport = new RevenueReport();
+                        revenueReport.GetTop3Revenue();
                         break;
                     case 12:
                         //Leave Bangazon!
