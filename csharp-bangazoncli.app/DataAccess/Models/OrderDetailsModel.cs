@@ -13,5 +13,6 @@ namespace csharp_bangazoncli.app.DataAccess.Models
         public int Quantity { get; set; }
         public decimal ProductPrice { get; set; }
         public decimal TotalProductPrice { get; set; }
+        public string PaymentType { get; set; }
     }
 }

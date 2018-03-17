@@ -11,7 +11,31 @@ namespace csharp_bangazoncli.app.DataAccess
     {
         readonly string _connectionString = ConfigurationManager.ConnectionStrings["BangazonCLI"].ConnectionString;
 
-        public List<OrderDetailsModel> DisplayOrderDetails(int orderId)
+        public List<OrderDetailsModel> GetAllCustomerOrders(int customerId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var cmd = connection.CreateCommand();
+                cmd.CommandText = @"Select * from Orders";
+                var reader = cmd.ExecuteReader();
+                var allOrdersForSelectedCustomer = new List<OrderDetailsModel>();
+                while (reader.Read())
+                {
+                    var selectedCustomerOrders = new OrderDetailsModel
+                    {
+                        OrderId = int.Parse(reader["OrderId"].ToString()),
+                    };
+
+                    allOrdersForSelectedCustomer.Add(selectedCustomerOrders);
+                }
+                return allOrdersForSelectedCustomer;
+            }
+        }
+
+        
+
+        public List<OrderDetailsModel> DisplayOrderDetails()
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -25,11 +49,13 @@ namespace csharp_bangazoncli.app.DataAccess
                                     from orderline ol
 		                                join products p
 		                                on ol.productid = ol.productid
-                                        where ol.OrderId = @orderId
+                                        where ol.OrderId = o.orderId
                                         order by ol.orderid";
 
                 var reader = cmd.ExecuteReader();
                 var totalOrder = new List<OrderDetailsModel>();
+
+
 
                 while (reader.Read())
                 {
@@ -40,6 +66,11 @@ namespace csharp_bangazoncli.app.DataAccess
                         ProductPrice = decimal.Parse(reader["ProductPrice"].ToString()),
                         TotalProductPrice = decimal.Parse(reader["TotalProductPrice"].ToString())
                     };
+
+                    if (orderDetails.ProductName == null)
+                    {
+                        Console.WriteLine("Please add some products to your order first. Press any key to return to main menu.");
+                    }
 
                     totalOrder.Add(orderDetails);
                 }
