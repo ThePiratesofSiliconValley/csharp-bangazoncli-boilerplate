@@ -167,6 +167,30 @@ namespace csharp_bangazoncli.app.DataAccess
                 }
 
             }
+
+            var selectedPaymentType = int.Parse(Console.ReadLine().ToString());
+            
+
+            using (var connection2 = new SqlConnection(_connectionString))
+            {
+                connection2.Open();
+                var cmd2 = connection2.CreateCommand();
+                cmd2.CommandText = @"SET TotalPrice = @totalPrice
+                                    ,PaymentTypeId = @paymentTypeId
+                                    WHERE OrderId = @orderId";
+
+                var orderIdParam = new SqlParameter("@orderId", SqlDbType.Int);
+                orderIdParam.Value = orderId;
+                cmd2.Parameters.Add(orderIdParam);
+
+                var paymentTypeIdParam = new SqlParameter("@paymentTypeId", SqlDbType.Int);
+                paymentTypeIdParam.Value = paymentTypeId;
+                cmd2.Parameters.Add(paymentTypeIdParam);
+            }
+
+            
+
+            Console.WriteLine("Your order is complete!  Please visit our wonderful console app again for your future needs!");
         }
     }
 }
