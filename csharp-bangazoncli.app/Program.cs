@@ -62,6 +62,7 @@ namespace csharp_bangazoncli.app
                         {
                             Console.WriteLine("You added a customer!");
                         }
+                        System.Threading.Thread.Sleep(1000);
                         break;
                     case 2:
                         Console.Clear();
@@ -79,6 +80,7 @@ namespace csharp_bangazoncli.app
                         var selectedCustomerIndex = int.Parse(selectedCustomer.ToString());
                         customer = listOfCustomerNames[selectedCustomerIndex - 1];
                         Console.WriteLine($"the selected customer is {customer.FirstName} {customer.LastName}");
+                        System.Threading.Thread.Sleep(1000);
 
                         break;
                     case 3:
@@ -98,7 +100,7 @@ namespace csharp_bangazoncli.app
                         payment.AddPaymentType(pmtType, customerId, acctNumberInt);
 
                         Console.WriteLine($"You have added {pmtType} {acctNumber} to {customer.FirstName} {customer.LastName}");
-                        Console.ReadLine();
+                        System.Threading.Thread.Sleep(1000);
 
                         break;
                     case 4:
