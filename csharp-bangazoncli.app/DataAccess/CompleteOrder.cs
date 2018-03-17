@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 
 
@@ -17,7 +18,12 @@ namespace csharp_bangazoncli.app.DataAccess
             {
                 connection.Open();
                 var cmd = connection.CreateCommand();
-                cmd.CommandText = @"Select * from Orders";
+                cmd.CommandText = @"Select * from Orders where customerId = @customerId";
+
+                var customerIdParam = new SqlParameter("@customerId", SqlDbType.Int);
+                customerIdParam.Value = customerId;
+
+                cmd.Parameters.Add(customerIdParam);
                 var reader = cmd.ExecuteReader();
                 var allOrdersForSelectedCustomer = new List<OrderDetailsModel>();
                 while (reader.Read())
@@ -35,7 +41,7 @@ namespace csharp_bangazoncli.app.DataAccess
 
         
 
-        public List<OrderDetailsModel> DisplayOrderDetails()
+        public void DisplayOrderDetails(int orderId, int customerId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -47,10 +53,21 @@ namespace csharp_bangazoncli.app.DataAccess
 		                                p.productprice,
 		                                ol.quantity * p.productprice as totalProductPrice
                                     from orderline ol
+                                        join orders o
+                                        on o.OrderId = ol.OrderId
 		                                join products p
-		                                on ol.productid = ol.productid
-                                        where ol.OrderId = o.orderId
+		                                on ol.productid = p.productid
+                                        where ol.OrderId = @orderId
+                                        and o.customerId = @customerId
                                         order by ol.orderid";
+
+                var orderIdParam = new SqlParameter("@orderId", SqlDbType.Int);
+                orderIdParam.Value = orderId;
+                cmd.Parameters.Add(orderIdParam);
+
+                var customerIdParam = new SqlParameter("@customerId", SqlDbType.Int);
+                customerIdParam.Value = customerId;
+                cmd.Parameters.Add(customerIdParam);
 
                 var reader = cmd.ExecuteReader();
                 var totalOrder = new List<OrderDetailsModel>();
@@ -75,37 +92,80 @@ namespace csharp_bangazoncli.app.DataAccess
                     totalOrder.Add(orderDetails);
                 }
 
-                return totalOrder;
+
+                foreach (var orders in totalOrder)
+                {
+                    Console.WriteLine($"Product: {orders.ProductName}      Quantity: {orders.Quantity}       Total Price: {orders.TotalProductPrice}");
+                }
             }
         }
 
-        public List<CompleteOrderModel> TotalPriceOfOrder()
+        public void TotalPriceOfOrder(int orderId, int customerId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
                 var cmd = connection.CreateCommand();
                 cmd.CommandText = @"select ol.orderid,
-		                                SUM(ol.quantity * p.productprice) as totalProductPrice
+		                                SUM(ol.quantity * p.productprice) as totalOrderPrice
                                     from orderline ol
 		                            join products p
 		                                on p.productid = ol.productid
+                                    where ol.orderid = @orderid
                                     group by ol.orderid";
 
+                var orderIdParam = new SqlParameter("@orderId", SqlDbType.Int);
+                orderIdParam.Value = orderId;
+                cmd.Parameters.Add(orderIdParam);
+
+                var orderTotalInfo = new CompleteOrderModel();
                 var reader = cmd.ExecuteReader();
-                var totalOrder = new List<CompleteOrderModel>();
                 while (reader.Read())
                 {
-                    var orderTotalInfo = new CompleteOrderModel
-                    {
-                        OrderId = int.Parse(reader["OrderId"].ToString()),
-                        TotalProductPrice = decimal.Parse(reader["TotalProductPrice"].ToString())
-                    };
-
-                    totalOrder.Add(orderTotalInfo);
+                    orderTotalInfo.OrderId = int.Parse(reader["OrderId"].ToString());
+                    orderTotalInfo.TotalOrderPrice = decimal.Parse(reader["TotalOrderPrice"].ToString());
                 }
 
-                return totalOrder;
+                Console.WriteLine($"Your order total is: {orderTotalInfo.TotalOrderPrice}.  Are you ready to Purchase: (y/n)");
+            }
+            var userSelection = Console.ReadKey();
+
+            if (userSelection.KeyChar == 'y')
+            {
+                using (var connection1 = new SqlConnection(_connectionString))
+                {
+                    connection1.Open();
+                    var cmd1 = connection1.CreateCommand();
+                    cmd1.CommandText = @"select * from PmtType	
+                                                 where customerid = @customerId";
+
+                    var customerIdParam = new SqlParameter("@customerId", SqlDbType.Int);
+                    customerIdParam.Value = customerId;
+                    cmd1.Parameters.Add(customerIdParam);
+                    var reader1 = cmd1.ExecuteReader();
+                    var orderDetails = new List<OrderDetailsModel>();
+                    Console.WriteLine("Choose a Payment Option:");
+                    while (reader1.Read())
+                    {
+                        var paymentTypes = new OrderDetailsModel
+                        {
+                            PaymentType = reader1["PmtType"].ToString(),
+                            PaymentTypeId = int.Parse(reader1["PmtTypeId"].ToString())
+
+                        };
+
+                        orderDetails.Add(paymentTypes);
+                    }
+
+                    var paymentCounter = 0;
+                    foreach (var orderDetail in orderDetails)
+                    {
+                        paymentCounter++;
+                        Console.WriteLine($"{paymentCounter}. {orderDetail.PaymentType}");
+                    }
+                   
+                }
+
             }
         }
     }

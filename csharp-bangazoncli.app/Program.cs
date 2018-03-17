@@ -186,23 +186,28 @@ namespace csharp_bangazoncli.app
                         break;
                     case 6:
                         //Complete an order
+                        Console.Clear();
                         var completeOrder = new CompleteOrder();
                         var customerOrders = new CompleteOrder();
                         var orderCounter = 0;
                         var allSelectedCustomerOrders = customerOrders.GetAllCustomerOrders(customer.CustomerId);
-                        var selectingOrderToComplete = true;
-                        while (selectingOrderToComplete)
-                        {
+                        Console.WriteLine("Please select the order that you wish to complete:");
                             foreach (var customerOrder in allSelectedCustomerOrders)
                             {
                                 orderCounter++;
-                                Console.WriteLine($"{customerOrder.OrderId}");
+                                Console.WriteLine($"{orderCounter}. {customerOrder.OrderId}");
                             }
 
-                            var userSelection = Console.ReadLine();
-                        }
+                            var userSelection = int.Parse(Console.ReadLine());
+
+                        var selectedOrder = allSelectedCustomerOrders[userSelection - 1];
                         
-                        var orderDetailsInfo = completeOrder.DisplayOrderDetails();
+                        
+                        completeOrder.DisplayOrderDetails(selectedOrder.OrderId, customer.CustomerId);
+                        
+                        completeOrder.TotalPriceOfOrder(selectedOrder.OrderId, customer.CustomerId);
+
+
 
                         Console.Read();
 

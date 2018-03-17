@@ -8,11 +8,13 @@ namespace csharp_bangazoncli.app.DataAccess.Models
 {
     class OrderDetailsModel
     {
+        public int CustomerId { get; set; }
         public int OrderId { get; set; }
         public string ProductName { get; set; }
         public int Quantity { get; set; }
         public decimal ProductPrice { get; set; }
         public decimal TotalProductPrice { get; set; }
         public string PaymentType { get; set; }
+        public int PaymentTypeId { get; set; }
     }
 }

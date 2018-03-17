@@ -9,6 +9,6 @@ namespace csharp_bangazoncli.app.DataAccess.Models
     class CompleteOrderModel
     {
         public int OrderId { get; set; }
-        public decimal TotalProductPrice { get; set; }
+        public decimal TotalOrderPrice { get; set; }
     }
 }
