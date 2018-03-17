@@ -201,7 +201,7 @@ namespace csharp_bangazoncli.app
                         Console.Clear();
                         //Update product information
                         var getAllProducts = new ProductQuery();
-                        var productsToUpdate = getAllProducts.GetAllProducts();
+                        var productsToUpdate = getAllProducts.GetCustomerProducts(customer.CustomerId);
                         Console.WriteLine("All Products");
                         var counter3 = 0;
                         foreach (var product in productsToUpdate)
