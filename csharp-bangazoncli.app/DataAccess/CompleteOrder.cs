@@ -102,6 +102,8 @@ namespace csharp_bangazoncli.app.DataAccess
 
         public void TotalPriceOfOrder(int orderId, int customerId)
         {
+                var orderTotalInfo = new CompleteOrderModel();
+                var orderDetails = new List<OrderDetailsModel>();
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
@@ -118,7 +120,6 @@ namespace csharp_bangazoncli.app.DataAccess
                 orderIdParam.Value = orderId;
                 cmd.Parameters.Add(orderIdParam);
 
-                var orderTotalInfo = new CompleteOrderModel();
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -143,7 +144,6 @@ namespace csharp_bangazoncli.app.DataAccess
                     customerIdParam.Value = customerId;
                     cmd1.Parameters.Add(customerIdParam);
                     var reader1 = cmd1.ExecuteReader();
-                    var orderDetails = new List<OrderDetailsModel>();
                     Console.WriteLine("Choose a Payment Option:");
                     while (reader1.Read())
                     {
@@ -175,7 +175,8 @@ namespace csharp_bangazoncli.app.DataAccess
             {
                 connection2.Open();
                 var cmd2 = connection2.CreateCommand();
-                cmd2.CommandText = @"SET TotalPrice = @totalPrice
+                cmd2.CommandText = @"UPDATE Orders
+                                    SET TotalPrice = @totalPrice
                                     ,PaymentTypeId = @paymentTypeId
                                     WHERE OrderId = @orderId";
 
@@ -184,8 +185,14 @@ namespace csharp_bangazoncli.app.DataAccess
                 cmd2.Parameters.Add(orderIdParam);
 
                 var paymentTypeIdParam = new SqlParameter("@paymentTypeId", SqlDbType.Int);
-                paymentTypeIdParam.Value = paymentTypeId;
+                paymentTypeIdParam.Value = orderDetails[selectedPaymentType -1].PaymentTypeId;
                 cmd2.Parameters.Add(paymentTypeIdParam);
+
+                var totalPriceParam = new SqlParameter("@totalPrice", SqlDbType.Money);
+                totalPriceParam.Value = orderTotalInfo.TotalOrderPrice;
+                cmd2.Parameters.Add(totalPriceParam);
+
+                var result = cmd2.ExecuteNonQuery();
             }
 
             

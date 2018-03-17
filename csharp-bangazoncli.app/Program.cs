@@ -209,8 +209,7 @@ namespace csharp_bangazoncli.app
 
 
 
-                        Console.Read();
-
+                        
 
                         break;
                     case 7:
