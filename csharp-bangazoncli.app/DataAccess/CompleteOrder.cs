@@ -107,7 +107,8 @@ namespace csharp_bangazoncli.app.DataAccess
                 connection.Open();
                 var cmd = connection.CreateCommand();
                 cmd.CommandText = @"select ol.orderid,
-		                                SUM(ol.quantity * p.productprice) as totalOrderPrice
+		                                SUM(ol.quantity * p.productprice) as totalOrderPrice,
+                                        SUM(ol.quantity) as TotalProducts
                                     from orderline ol
 		                            join products p
 		                                on p.productid = ol.productid
@@ -123,6 +124,7 @@ namespace csharp_bangazoncli.app.DataAccess
                 {
                     orderTotalInfo.OrderId = int.Parse(reader["OrderId"].ToString());
                     orderTotalInfo.TotalOrderPrice = decimal.Parse(reader["TotalOrderPrice"].ToString());
+                    orderTotalInfo.TotalProducts = int.Parse(reader["TotalProducts"].ToString());
                 }
 
                 Console.WriteLine($"Your order total is: {orderTotalInfo.TotalOrderPrice}.  Are you ready to Purchase: (y/n)");
@@ -155,46 +157,63 @@ namespace csharp_bangazoncli.app.DataAccess
                         orderDetails.Add(paymentTypes);
                     }
 
+
                     var paymentCounter = 0;
                     foreach (var orderDetail in orderDetails)
                     {
                         paymentCounter++;
                         Console.WriteLine($"{paymentCounter}. {orderDetail.PaymentType}");
                     }
-                   
-                }
 
-                using (var connection2 = new SqlConnection(_connectionString))
-                {
-                    var selectedPaymentType = int.Parse(Console.ReadLine().ToString());
-                    connection2.Open();
-                    var cmd2 = connection2.CreateCommand();
-                    cmd2.CommandText = @"UPDATE Orders
+                    if(paymentCounter <= 0)
+                    {
+                        Console.WriteLine("You must add a payment type in order to complete your order. You will be returned to the main menu.");
+                        Console.ReadKey();                    
+                    }
+                    else
+                    {
+                        var selectedPaymentType = int.Parse(Console.ReadLine().ToString());
+                        cmd1.CommandText = @"UPDATE Orders
                                     SET TotalPrice = @totalPrice
                                     ,PaymentTypeId = @paymentTypeId
+                                    ,TotalProducts = @totalProducts
                                     WHERE OrderId = @orderId";
 
-                    var orderIdParam = new SqlParameter("@orderId", SqlDbType.Int);
-                    orderIdParam.Value = orderId;
-                    cmd2.Parameters.Add(orderIdParam);
+                        var orderIdParam = new SqlParameter("@orderId", SqlDbType.Int);
+                        orderIdParam.Value = orderId;
+                        cmd1.Parameters.Add(orderIdParam);
 
-                    var paymentTypeIdParam = new SqlParameter("@paymentTypeId", SqlDbType.Int);
-                    paymentTypeIdParam.Value = orderDetails[selectedPaymentType - 1].PaymentTypeId;
-                    cmd2.Parameters.Add(paymentTypeIdParam);
+                        var paymentTypeIdParam = new SqlParameter("@paymentTypeId", SqlDbType.Int);
+                        paymentTypeIdParam.Value = orderDetails[selectedPaymentType - 1].PaymentTypeId;
+                        cmd1.Parameters.Add(paymentTypeIdParam);
 
-                    var totalPriceParam = new SqlParameter("@totalPrice", SqlDbType.Money);
-                    totalPriceParam.Value = orderTotalInfo.TotalOrderPrice;
-                    cmd2.Parameters.Add(totalPriceParam);
+                        var totalPriceParam = new SqlParameter("@totalPrice", SqlDbType.Money);
+                        totalPriceParam.Value = orderTotalInfo.TotalOrderPrice;
+                        cmd1.Parameters.Add(totalPriceParam);
 
-                    var result = cmd2.ExecuteNonQuery();
+                        var totalProductsParam = new SqlParameter("@totalProducts", SqlDbType.Int);
+                        totalProductsParam.Value = orderTotalInfo.TotalProducts;
+                        cmd1.Parameters.Add(totalProductsParam);
+
+                        var result = cmd1.ExecuteNonQuery();
+                    }
+                    Console.WriteLine("Your order is complete!  Please visit our wonderful console app again for your future needs!");
                 }
-                Console.WriteLine("Your order is complete!  Please visit our wonderful console app again for your future needs!");
-            }
 
+            }
             if (userSelection.KeyChar == 'n')
             {
                 Console.WriteLine("You will be returned to the main menu.");
             }
+
         }
+
+        //using (var connection2 = new SqlConnection(_connectionString))
+        //{var cmd2 = connection2.CreateCommand();
+        //    var selectedPaymentType = int.Parse(Console.ReadLine().ToString());
+        //    connection2.Open();
+
+
+
     }
 }
