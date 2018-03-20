@@ -84,10 +84,7 @@ namespace csharp_bangazoncli.app.DataAccess
                         TotalProductPrice = decimal.Parse(reader["TotalProductPrice"].ToString())
                     };
 
-                    if (orderDetails.ProductName == null)
-                    {
-                        Console.WriteLine("Please add some products to your order first. Press any key to return to main menu.");
-                    }
+                    
 
                     totalOrder.Add(orderDetails);
                 }
@@ -97,6 +94,7 @@ namespace csharp_bangazoncli.app.DataAccess
                 {
                     Console.WriteLine($"Product: {orders.ProductName}      Quantity: {orders.Quantity}       Total Price: {orders.TotalProductPrice}");
                 }
+                
             }
         }
 
@@ -190,26 +188,13 @@ namespace csharp_bangazoncli.app.DataAccess
 
                     var result = cmd2.ExecuteNonQuery();
                 }
-
                 Console.WriteLine("Your order is complete!  Please visit our wonderful console app again for your future needs!");
-
             }
-
-            
 
             if (userSelection.KeyChar == 'n')
             {
                 Console.WriteLine("You will be returned to the main menu.");
             }
-
-            
-            
-
-            
-
-            
-
-            
         }
     }
 }

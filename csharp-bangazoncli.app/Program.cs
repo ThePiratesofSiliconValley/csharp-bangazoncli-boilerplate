@@ -198,19 +198,26 @@ namespace csharp_bangazoncli.app
                                 Console.WriteLine($"{orderCounter}. {customerOrder.OrderId}");
                             }
 
+                        if (orderCounter == 0)
+                        {
+                            Console.WriteLine("Please add some products to your order first. Press any key to return to main menu.");
+                            Console.ReadKey();
+                            break;
+                        }
+
+                        if (orderCounter > 0)
+                        {
                             var userSelection = int.Parse(Console.ReadLine());
 
-                        var selectedOrder = allSelectedCustomerOrders[userSelection - 1];
-                        
-                        
-                        completeOrder.DisplayOrderDetails(selectedOrder.OrderId, customer.CustomerId);
-                        
-                        completeOrder.TotalPriceOfOrder(selectedOrder.OrderId, customer.CustomerId);
+                            var selectedOrder = allSelectedCustomerOrders[userSelection - 1];
 
 
+                            completeOrder.DisplayOrderDetails(selectedOrder.OrderId, customer.CustomerId);
 
+                            completeOrder.TotalPriceOfOrder(selectedOrder.OrderId, customer.CustomerId);
 
-                        System.Threading.Thread.Sleep(1000);
+                            System.Threading.Thread.Sleep(1000);
+                        }
                         break;
                     case 7:
                         Console.Clear();
