@@ -167,6 +167,10 @@ namespace csharp_bangazoncli.app.DataAccess
                 }
 
             }
+            if (userSelection.KeyChar == 'n')
+            {
+                Console.Clear();
+            }
 
             var selectedPaymentType = int.Parse(Console.ReadLine().ToString());
             
