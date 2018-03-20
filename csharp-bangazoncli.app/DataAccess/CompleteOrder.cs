@@ -166,42 +166,50 @@ namespace csharp_bangazoncli.app.DataAccess
                    
                 }
 
-            }
-            if (userSelection.KeyChar == 'n')
-            {
-                Console.Clear();
-            }
-
-            var selectedPaymentType = int.Parse(Console.ReadLine().ToString());
-            
-
-            using (var connection2 = new SqlConnection(_connectionString))
-            {
-                connection2.Open();
-                var cmd2 = connection2.CreateCommand();
-                cmd2.CommandText = @"UPDATE Orders
+                using (var connection2 = new SqlConnection(_connectionString))
+                {
+                    var selectedPaymentType = int.Parse(Console.ReadLine().ToString());
+                    connection2.Open();
+                    var cmd2 = connection2.CreateCommand();
+                    cmd2.CommandText = @"UPDATE Orders
                                     SET TotalPrice = @totalPrice
                                     ,PaymentTypeId = @paymentTypeId
                                     WHERE OrderId = @orderId";
 
-                var orderIdParam = new SqlParameter("@orderId", SqlDbType.Int);
-                orderIdParam.Value = orderId;
-                cmd2.Parameters.Add(orderIdParam);
+                    var orderIdParam = new SqlParameter("@orderId", SqlDbType.Int);
+                    orderIdParam.Value = orderId;
+                    cmd2.Parameters.Add(orderIdParam);
 
-                var paymentTypeIdParam = new SqlParameter("@paymentTypeId", SqlDbType.Int);
-                paymentTypeIdParam.Value = orderDetails[selectedPaymentType -1].PaymentTypeId;
-                cmd2.Parameters.Add(paymentTypeIdParam);
+                    var paymentTypeIdParam = new SqlParameter("@paymentTypeId", SqlDbType.Int);
+                    paymentTypeIdParam.Value = orderDetails[selectedPaymentType - 1].PaymentTypeId;
+                    cmd2.Parameters.Add(paymentTypeIdParam);
 
-                var totalPriceParam = new SqlParameter("@totalPrice", SqlDbType.Money);
-                totalPriceParam.Value = orderTotalInfo.TotalOrderPrice;
-                cmd2.Parameters.Add(totalPriceParam);
+                    var totalPriceParam = new SqlParameter("@totalPrice", SqlDbType.Money);
+                    totalPriceParam.Value = orderTotalInfo.TotalOrderPrice;
+                    cmd2.Parameters.Add(totalPriceParam);
 
-                var result = cmd2.ExecuteNonQuery();
+                    var result = cmd2.ExecuteNonQuery();
+                }
+
+                Console.WriteLine("Your order is complete!  Please visit our wonderful console app again for your future needs!");
+
             }
 
             
 
-            Console.WriteLine("Your order is complete!  Please visit our wonderful console app again for your future needs!");
+            if (userSelection.KeyChar == 'n')
+            {
+                Console.WriteLine("You will be returned to the main menu.");
+            }
+
+            
+            
+
+            
+
+            
+
+            
         }
     }
 }

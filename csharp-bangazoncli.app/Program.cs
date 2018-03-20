@@ -209,8 +209,8 @@ namespace csharp_bangazoncli.app
 
 
 
-                        
 
+                        System.Threading.Thread.Sleep(1000);
                         break;
                     case 7:
                         Console.Clear();
