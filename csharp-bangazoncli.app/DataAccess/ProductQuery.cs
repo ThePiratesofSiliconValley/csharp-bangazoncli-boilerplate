@@ -63,6 +63,8 @@ namespace csharp_bangazoncli.app.DataAccess
                     {
                         ProductId = int.Parse(reader["productId"].ToString()),
                         ProductName = reader["productName"].ToString(),
+                        ProductDescription = reader["productDescription"].ToString(),
+                        Quantity = int.Parse(reader["quantity"].ToString()),
                         ProductPrice = double.Parse(reader["productPrice"].ToString())
                     };
 

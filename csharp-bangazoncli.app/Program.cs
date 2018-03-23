@@ -18,18 +18,18 @@ namespace csharp_bangazoncli.app
             var customer = new CustomerList();
             var run = true;
             while (run)
-            
+
 
 
             {
-                var userInput = MainMenu();
+                var userInput = MainMenu(customer.CustomerId);
                 switch (int.Parse(userInput))
                 {
                     case 1:
                         Console.Clear();
 
-            
-            
+
+
 
                         Console.WriteLine("You've chosen to create a new customer account.");
 
@@ -62,6 +62,7 @@ namespace csharp_bangazoncli.app
                         {
                             Console.WriteLine("You added a customer!");
                         }
+                        System.Threading.Thread.Sleep(1000);
                         break;
                     case 2:
                         Console.Clear();
@@ -79,7 +80,7 @@ namespace csharp_bangazoncli.app
                         var selectedCustomerIndex = int.Parse(selectedCustomer.ToString());
                         customer = listOfCustomerNames[selectedCustomerIndex - 1];
                         Console.WriteLine($"the selected customer is {customer.FirstName} {customer.LastName}");
-                        Console.ReadLine();
+                        System.Threading.Thread.Sleep(1000);
                         break;
                     case 3:
                         Console.Clear();
@@ -98,7 +99,7 @@ namespace csharp_bangazoncli.app
                         payment.AddPaymentType(pmtType, customerId, acctNumberInt);
 
                         Console.WriteLine($"You have added {pmtType} {acctNumber} to {customer.FirstName} {customer.LastName}");
-                        Console.ReadLine();
+                        System.Threading.Thread.Sleep(1000);
 
                         break;
                     case 4:
@@ -195,13 +196,13 @@ namespace csharp_bangazoncli.app
 
                         var removeCustomerProduct = new RemoveProduct();
                         removeCustomerProduct.RemoveCustomerProduct(customer);
-                        
+
                         break;
                     case 8:
                         Console.Clear();
                         //Update product information
                         var getAllProducts = new ProductQuery();
-                        var productsToUpdate = getAllProducts.GetAllProducts();
+                        var productsToUpdate = getAllProducts.GetCustomerProducts(customer.CustomerId);
                         Console.WriteLine("All Products");
                         var counter3 = 0;
                         foreach (var product in productsToUpdate)
@@ -223,7 +224,7 @@ namespace csharp_bangazoncli.app
                             Console.WriteLine("Product updated!");
                         }
 
-           
+
                         System.Threading.Thread.Sleep(1000);
                         break;
                     case 9:
@@ -276,23 +277,36 @@ namespace csharp_bangazoncli.app
                 }
             }
 
-            string MainMenu()
+            string MainMenu(int customerid)
             {
                 View mainMenu = new View()
-                        .AddMenuOption("Create a customer account")
-                        .AddMenuOption("Choose active customer")
-                        .AddMenuOption("Create a payment option")
-                        .AddMenuOption("Add product to sell")
-                        .AddMenuOption("Add product to shopping cart")
-                        .AddMenuOption("Complete an order")
-                        .AddMenuOption("Remove customer product")
-                        .AddMenuOption("Update product information")
-                        .AddMenuOption("Show stale products")
-                        .AddMenuOption("Show customer revenue report")
-                        .AddMenuOption("Show overall product popularity")
-                        .AddMenuOption("Leave Bangazon!");
-
+                    .AddMenuOption("1. Create a customer account")
+                    .AddMenuOption("2. Choose active customer")
+                    .AddMenuOption("4. Add product to sell")
+                    .AddMenuOption("9. Show stale products")
+                    .AddMenuOption("10. Show customer revenue report")
+                    .AddMenuOption("11. Show overall product popularity")
+                    .AddMenuOption("12. Leave Bangazon!");
                 Console.Write(mainMenu.GetFullMenu());
+
+                if (customerid > 0)
+                {
+                     mainMenu = new View()
+                    .AddMenuOption("1. Create a customer account")
+                    .AddMenuOption("2. Choose active customer")
+                    .AddMenuOption("3. Create a payment option")
+                    .AddMenuOption("4. Add product to sell")
+                    .AddMenuOption("5. Add product to shopping cart")
+                    .AddMenuOption("6. Complete an order")
+                    .AddMenuOption("7. Remove customer product")
+                    .AddMenuOption("8. Update product information")
+                    .AddMenuOption("9. Show stale products")
+                    .AddMenuOption("10. Show customer revenue report")
+                    .AddMenuOption("11. Show overall product popularity")
+                    .AddMenuOption("12. Leave Bangazon!");
+                    Console.Write(mainMenu.GetFullMenu());
+                }
+
                 var userOption = Console.ReadLine();
                 return userOption;
             }

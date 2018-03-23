@@ -41,7 +41,7 @@ namespace csharp_bangazoncli.app
         internal View AddMenuOption(string menuItem)
         {
             ++itemNumber;
-            var menuEntry = $"{itemNumber}. {menuItem}";
+            var menuEntry = $"{menuItem}";
             _menuItems.Add(menuEntry);
             return this;
         }
